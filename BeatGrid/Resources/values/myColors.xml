@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+	<color name="topBarBackground">#999999</color>
+	<color name="timeCursorBackground">#1a1a1a</color>
+	<color name="gridBackground">#1a1a1a</color>
+</resources>

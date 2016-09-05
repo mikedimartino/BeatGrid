@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">BeatGrid</string>
-    <string name="Test1">TEST 1</string>
+  <string name="Hello">Hello World, Click Me!</string>
+  <string name="ApplicationName">BeatGrid</string>
+  <string name="Test1">TEST 1</string>
+	
+	<!-- FontAwesome Icons - http://fontawesome.io/cheatsheet/ -->
+	<string name="icon_play">&#xf04b;</string>
+	<string name="icon_pause">&#xf04c;</string>
+	<string name="icon_trash">&#xf1f8;</string>
+	<string name="icon_settings">&#xf013;</string>
+	<string name="icon_previous">&#xf048;</string>
+	<string name="icon_next">&#xf051;</string>
+	<string name="icon_right_arrow">&#xf061;</string>
+	<string name="icon_circled_right_arrow">&#xf18e;</string>
+	<string name="icon_left_arrow">&#xf060;</string>
+	<string name="icon_circled_left_arrow">&#xf190;</string>
+
 </resources>
