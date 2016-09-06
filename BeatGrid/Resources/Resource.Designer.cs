@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("BeatGrid.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("BeatGridAndroid.Resource", IsApplication=true)]
 
-namespace BeatGrid
+namespace BeatGridAndroid
 {
 	
 	

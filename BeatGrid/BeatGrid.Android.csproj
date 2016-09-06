@@ -9,8 +9,8 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BeatGrid</RootNamespace>
-    <AssemblyName>BeatGrid</AssemblyName>
+    <RootNamespace>BeatGridAndroid</RootNamespace>
+    <AssemblyName>BeatGridAndroid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
@@ -98,7 +98,12 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\myColors.xml" />
   </ItemGroup>
-  <Import Project="..\SharedProject1\SharedProject1.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\BeatGrid.ClassLibrary\BeatGrid.csproj">
+      <Project>{cb4894f8-f2cb-43b5-95c1-53c097f23890}</Project>
+      <Name>BeatGrid</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.

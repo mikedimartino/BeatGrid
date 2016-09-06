@@ -5,10 +5,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using BeatGrid.Model;
 using Android.Graphics;
+using BeatGrid;
 
-namespace BeatGrid
+namespace BeatGridAndroid
 {
 	[Activity(Label = "BeatGrid", MainLauncher = true, Icon = "@drawable/BeatGridLogo")]
 	public class MainActivity : Activity

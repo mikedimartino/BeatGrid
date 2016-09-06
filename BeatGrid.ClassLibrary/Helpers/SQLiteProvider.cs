@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeatGrid.Model
+namespace BeatGrid
 {
-    class SQLiteProvider
+    public class SQLiteProvider
     {
     }
 }

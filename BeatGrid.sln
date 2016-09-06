@@ -3,23 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatGrid", "BeatGrid.ClassLibrary\BeatGrid.csproj", "{CB4894F8-F2CB-43B5-95C1-53C097F23890}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatGrid.Android", "BeatGrid\BeatGrid.Android.csproj", "{8165600E-FCDA-445D-82F7-3FA8E5B68F5C}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BeatGrid.Model", "SharedProject1\BeatGrid.Model.shproj", "{6FEE5767-E602-4ABD-9DDD-DB157A41AA0B}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BeatGrid.ViewModel", "BeatGrid.ViewModel\BeatGrid.ViewModel.shproj", "{D77F712A-C4AC-4903-926B-9C56489BF562}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		SharedProject1\SharedProject1.projitems*{6fee5767-e602-4abd-9ddd-db157a41aa0b}*SharedItemsImports = 13
-		SharedProject1\SharedProject1.projitems*{8165600e-fcda-445d-82f7-3fa8e5b68f5c}*SharedItemsImports = 4
-		BeatGrid.ViewModel\BeatGrid.ViewModel.projitems*{d77f712a-c4ac-4903-926b-9c56489bf562}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB4894F8-F2CB-43B5-95C1-53C097F23890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB4894F8-F2CB-43B5-95C1-53C097F23890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB4894F8-F2CB-43B5-95C1-53C097F23890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB4894F8-F2CB-43B5-95C1-53C097F23890}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8165600E-FCDA-445D-82F7-3FA8E5B68F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8165600E-FCDA-445D-82F7-3FA8E5B68F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8165600E-FCDA-445D-82F7-3FA8E5B68F5C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
