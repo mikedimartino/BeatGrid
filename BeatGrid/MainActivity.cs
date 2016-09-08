@@ -7,6 +7,7 @@ using Android.Widget;
 using Android.OS;
 using Android.Graphics;
 using BeatGrid;
+using SQLite;
 
 namespace BeatGridAndroid
 {
@@ -39,7 +40,13 @@ namespace BeatGridAndroid
 			SetContentView(Resource.Layout.Main);
 
 			InitLayout();
-			DrawGrid(Measure.GetTestMeasure());
+			DrawGrid(Measure.GetRandomTestMeasure());
+
+			var tb = Beat.GetTestBeat();
+			var tbRow = tb.ToDbRow();
+
+
+			TestSQLite();
 		}
 
 		private void InitLayout()
@@ -117,6 +124,30 @@ namespace BeatGridAndroid
 				beatGridTable.AddView(row, rowParams);
 			}
 		}
+
+
+
+		public void TestSQLite()
+		{
+			try
+			{
+				// From http://stackoverflow.com/questions/25882837/sqlite-could-not-open-database-file
+				string applicationFolderPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "BeatGridDb");
+
+				// Create the folder path.
+				System.IO.Directory.CreateDirectory(applicationFolderPath);
+
+				string databaseFileName = System.IO.Path.Combine(applicationFolderPath, "BeatGrid.db");
+
+				SQLiteProvider provider = new SQLiteProvider(databaseFileName);
+				provider.SaveBeat(Beat.GetTestBeat());
+				var beats = provider.GetAllBeats();
+			}
+			catch(Exception ex) { }
+		}
+
+
+
 	}
 
 }

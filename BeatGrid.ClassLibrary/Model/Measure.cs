@@ -52,5 +52,23 @@ namespace BeatGrid
 
 			return measure;
 		}
+
+		public static Measure GetRandomTestMeasure()
+		{
+			var ts = new TimeSignature(4, NoteType.Quarter);
+			var measure = new Measure(ts, NoteType.Sixteenth, 8);
+			var rand = new Random();
+
+			for (int i = 0; i < measure.Cells.GetLength(0); i++)
+			{
+				for (int j = 0; j < measure.Cells.GetLength(1); j++)
+				{
+					measure.Cells[i, j].On = rand.Next(0, 3) == 0; // on average one third of the squares should be filled
+				}
+			}
+
+			return measure;
+		}
+
 	}
 }
