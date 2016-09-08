@@ -8,6 +8,7 @@ namespace BeatGrid
 {
 	public class Cell
 	{
+		public Cell() { }
 		public Cell(bool on = false)
 		{
 			On = on;

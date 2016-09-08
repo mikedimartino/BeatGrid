@@ -8,6 +8,7 @@ namespace BeatGrid
 {
 	public class TimeSignature
 	{
+		public TimeSignature() { }
 		public TimeSignature(int notesPearMeasure, NoteType noteType)
 		{
 			NotesPerMeasure = notesPearMeasure;

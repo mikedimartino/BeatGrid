@@ -28,12 +28,10 @@ namespace BeatGrid
 
 		public List<Beat> GetAllBeats()
 		{
-			//return _connection.Table<BeatDbRow>()
-			//	.Select(r => JsonConvert.DeserializeObject<Beat>(r.Json))
-			//	.ToList();
+			// For some reason need to call ToList() on the Table<> for it to work. Might be a cleaner way.
+			return _connection.Table<BeatDbRow>().ToList()
+				.Select(r => JsonConvert.DeserializeObject<Beat>(r.Json)).ToList();
 
-			var beatDbRows = _connection.Table<BeatDbRow>().ToList();
-			return null;
 		}
 
 		public void SaveBeat(Beat beat)
@@ -43,8 +41,8 @@ namespace BeatGrid
 			if(beat.Id == -1 || _connection.Update(beatDbRow) == 0)
 			{
 				// New beat. Need to insert and get the id, then update Beat, serialize and save again.
-				//beat.Id = _connection.Insert(beatDbRow);
-				beat.Id = _connection.Insert(beatDbRow);
+				_connection.Insert(beatDbRow); // Insert automatically updates beatDbRow's primary key
+				beat.Id = beatDbRow.Id;
 				_connection.Update(beat.ToDbRow());
 			}
 

@@ -8,6 +8,7 @@ namespace BeatGrid
 {
 	public class Measure
 	{
+		public Measure() { }
 		public Measure(TimeSignature timeSignature, NoteType divisionLevel, int rows)
 		{
 			TimeSignature = timeSignature;

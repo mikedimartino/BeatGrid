@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -30,6 +31,16 @@ namespace BeatGrid
 		public TimeSignature TimeSignature { get; set; }
 		public NoteType DivisionLevel { get; set; } // Show 32nd, 16th, or 8th notes
 		public List<Measure> Measures { get; set; }
+
+		public BeatDbRow ToDbRow()
+		{
+			return new BeatDbRow()
+			{
+				Id = this.Id,
+				Name = this.Name,
+				Json = JsonConvert.SerializeObject(this)
+			};
+		}
 
 		public static Beat GetTestBeat(int measureCount = 1)
 		{

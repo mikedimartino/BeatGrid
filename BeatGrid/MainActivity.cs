@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
@@ -44,7 +45,6 @@ namespace BeatGridAndroid
 
 			var tb = Beat.GetTestBeat();
 			var tbRow = tb.ToDbRow();
-
 
 			TestSQLite();
 		}
@@ -142,6 +142,7 @@ namespace BeatGridAndroid
 				SQLiteProvider provider = new SQLiteProvider(databaseFileName);
 				provider.SaveBeat(Beat.GetTestBeat());
 				var beats = provider.GetAllBeats();
+				var firstBeat = provider.GetBeat(beats.First().Id);
 			}
 			catch(Exception ex) { }
 		}

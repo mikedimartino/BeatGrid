@@ -19,14 +19,5 @@ namespace BeatGrid
 			}
 		}
 
-		public static BeatDbRow ToDbRow(this Beat beat)
-		{
-			return new BeatDbRow()
-			{
-				Id = beat.Id,
-				Name = beat.Name,
-				Json = JsonConvert.SerializeObject(beat)
-			};
-		}
 	}
 }
