@@ -31,7 +31,6 @@ namespace BeatGrid
 			// For some reason need to call ToList() on the Table<> for it to work. Might be a cleaner way.
 			return _connection.Table<BeatDbRow>().ToList()
 				.Select(r => JsonConvert.DeserializeObject<Beat>(r.Json)).ToList();
-
 		}
 
 		public void SaveBeat(Beat beat)

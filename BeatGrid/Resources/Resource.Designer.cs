@@ -514,26 +514,29 @@ namespace BeatGridAndroid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070006
-			public const int BeatGrid = 2131165190;
+			// aapt resource value: 0x7f070007
+			public const int BeatGrid = 2131165191;
 			
 			// aapt resource value: 0x7f070000
-			public const int MainMenuButton = 2131165184;
+			public const int HomeButton = 2131165184;
+			
+			// aapt resource value: 0x7f070006
+			public const int NextButton = 2131165190;
 			
 			// aapt resource value: 0x7f070005
-			public const int NextButton = 2131165189;
+			public const int PlayPauseButton = 2131165189;
 			
 			// aapt resource value: 0x7f070004
-			public const int PlayPauseButton = 2131165188;
-			
-			// aapt resource value: 0x7f070003
-			public const int PreviousButton = 2131165187;
-			
-			// aapt resource value: 0x7f070002
-			public const int SettingsButton = 2131165186;
+			public const int PreviousButton = 2131165188;
 			
 			// aapt resource value: 0x7f070001
-			public const int TrashButton = 2131165185;
+			public const int SaveButton = 2131165185;
+			
+			// aapt resource value: 0x7f070003
+			public const int SettingsButton = 2131165187;
+			
+			// aapt resource value: 0x7f070002
+			public const int TrashButton = 2131165186;
 			
 			static Id()
 			{
@@ -579,6 +582,9 @@ namespace BeatGridAndroid
 			// aapt resource value: 0x7f05000a
 			public const int icon_circled_right_arrow = 2131034122;
 			
+			// aapt resource value: 0x7f05000e
+			public const int icon_home = 2131034126;
+			
 			// aapt resource value: 0x7f05000b
 			public const int icon_left_arrow = 2131034123;
 			
@@ -596,6 +602,9 @@ namespace BeatGridAndroid
 			
 			// aapt resource value: 0x7f050009
 			public const int icon_right_arrow = 2131034121;
+			
+			// aapt resource value: 0x7f05000d
+			public const int icon_save = 2131034125;
 			
 			// aapt resource value: 0x7f050006
 			public const int icon_settings = 2131034118;

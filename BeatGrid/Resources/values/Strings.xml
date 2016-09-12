@@ -15,5 +15,7 @@
 	<string name="icon_circled_right_arrow">&#xf18e;</string>
 	<string name="icon_left_arrow">&#xf060;</string>
 	<string name="icon_circled_left_arrow">&#xf190;</string>
+	<string name ="icon_save">&#xf0c7;</string>
+	<string name ="icon_home">&#xf015;</string>
 
 </resources>

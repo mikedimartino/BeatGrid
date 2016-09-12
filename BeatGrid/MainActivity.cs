@@ -22,14 +22,13 @@ namespace BeatGridAndroid
 
 		private Typeface fontAwesome;
 
+		private Button homeButton;
+		private Button saveButton;
 		private Button trashButton;
 		private Button settingsButton;
 		private Button previousButton;
 		private Button playPauseButton;
 		private Button nextButton;
-
-		private Button mainMenuButton;
-
 
 		protected override void OnCreate(Bundle bundle)
 		{
@@ -75,12 +74,16 @@ namespace BeatGridAndroid
 			#endregion
 
 			#region Top Bar Buttons
+			homeButton = FindViewById<Button>(Resource.Id.HomeButton);
+			saveButton = FindViewById<Button>(Resource.Id.SaveButton);
 			trashButton = FindViewById<Button>(Resource.Id.TrashButton);
 			settingsButton = FindViewById<Button>(Resource.Id.SettingsButton);
 			previousButton = FindViewById<Button>(Resource.Id.PreviousButton);
 			playPauseButton = FindViewById<Button>(Resource.Id.PlayPauseButton);
 			nextButton = FindViewById<Button>(Resource.Id.NextButton);
 
+			homeButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
+			saveButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
 			trashButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
 			settingsButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
 			previousButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
@@ -89,8 +92,8 @@ namespace BeatGridAndroid
 			#endregion
 
 			#region Main Menu Button
-			mainMenuButton = FindViewById<Button>(Resource.Id.MainMenuButton);
-			mainMenuButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
+			//mainMenuButton = FindViewById<Button>(Resource.Id.MainMenuButton);
+			//mainMenuButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
 			#endregion
 		}
 

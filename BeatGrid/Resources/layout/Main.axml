@@ -3,131 +3,120 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-	
-  <Button
-		android:id="@+id/MainMenuButton"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:text="@string/icon_right_arrow"
-		android:layout_weight="20"
-		android:gravity="center"
-		android:background="@color/ivory"
-		android:textColor="@color/black"
-		android:textSize="30dp"/>
-	
-	<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-		android:orientation="vertical"
-		android:weightSum="20">
-
-		
-		<!-- Top Bar-->
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="3"
-			android:orientation="horizontal"
-			android:background="@color/topBarBackground">
-			
-			<!-- Beat name and info (measure x of y) -->
-			<LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_centerInParent="true"
-				android:layout_weight="1"
-				android:orientation="vertical"
-				android:paddingLeft="10dp">
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="Sample Beat 1"
-					android:textColor="@color/black"
-					android:textSize="30sp"
-					android:textStyle="bold"/>
-				
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="Measure 1 of 1"
-					android:textColor="@color/black"
-					android:textSize="20sp"/>
-				
-			</LinearLayout>
-			<!-- End Beat name and info (measure x of y) -->
-			
-			<!-- Buttons -->
-			<LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1"
-				android:gravity="right"
-				android:layout_centerInParent="true"
-				android:orientation="horizontal"
-				android:paddingLeft="10dp">
-
-				<Button
-					android:id="@+id/TrashButton"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:textSize="32dp"
-					android:text="@string/icon_trash"/>
-				
-				<Button
-					android:id="@+id/SettingsButton"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:textSize="32dp"
-					android:text="@string/icon_settings"/>
-		
-				<Button
-					android:id="@+id/PreviousButton"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:textSize="32dp"
-					android:text="@string/icon_previous"/>
-						
-				<Button
-					android:id="@+id/PlayPauseButton"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:textSize="32dp"
-					android:text="@string/icon_play"/>
-				<!-- TODO: Toggle Play/Pause -->
-				
-				<Button
-					android:id="@+id/NextButton"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:textSize="32dp"
-					android:text="@string/icon_next"/>
-			
-			</LinearLayout>
-		
-		</LinearLayout>
-		<!-- End Top Bar -->
-		
-		<!-- Cursor for time -->
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1"
-			android:orientation="horizontal"
-			android:background="@color/timeCursorBackground"/>
-		<!-- End Cursor for time -->
-		
-		<!-- Grid -->
-		<TableLayout
-      android:id="@+id/BeatGrid"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-			android:layout_weight="16"
-			android:background="@color/gridBackground"/>
-		<!-- End Grid -->
-		
-  </LinearLayout>
-	
+    <!--<Button
+        android:id="@+id/MainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/icon_right_arrow"
+        android:layout_weight="20"
+        android:gravity="center"
+        android:background="@color/ivory"
+        android:textColor="@color/black"
+        android:textSize="30dp" />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum="20">
+				<!-- Top Bar-->
+				<RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:background="@color/topBarBackground">
+						<!-- Beat name and info (measure x of y) -->
+            <LinearLayout
+								android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_alignParentLeft="true"
+                android:orientation="vertical"
+                android:paddingLeft="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sample Beat 1"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Measure 1 of 1"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </LinearLayout>
+						<!-- End Beat name and info (measure x of y) -->
+						<!-- Buttons -->
+						<LinearLayout
+								android:layout_width="wrap_content"
+								android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
+							<Button
+									android:id="@+id/HomeButton"
+									android:layout_width="wrap_content"
+									android:layout_height="match_parent"
+									android:textSize="32dp"
+									android:text="@string/icon_home" />
+							<Button
+                    android:id="@+id/SaveButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="32dp"
+                    android:text="@string/icon_save" />
+							<Button
+                    android:id="@+id/TrashButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="32dp"
+                    android:text="@string/icon_trash" />
+                <Button
+                    android:id="@+id/SettingsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="32dp"
+                    android:text="@string/icon_settings" />
+                <Button
+                    android:id="@+id/PreviousButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="32dp"
+                    android:text="@string/icon_previous" />
+                <Button
+                    android:id="@+id/PlayPauseButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="32dp"
+                    android:text="@string/icon_play" />
+            <!-- TODO: Toggle Play/Pause -->
+                <Button
+                    android:id="@+id/NextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="32dp"
+                    android:text="@string/icon_next" />
+            </LinearLayout>
+        </RelativeLayout>
+    <!-- End Top Bar -->
+    <!-- Cursor for time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/timeCursorBackground" />
+    <!-- End Cursor for time -->
+    <!-- Grid -->
+        <TableLayout
+            android:id="@+id/BeatGrid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="16"
+            android:background="@color/gridBackground" />
+    <!-- End Grid -->
+    </LinearLayout>
 </LinearLayout>
-
