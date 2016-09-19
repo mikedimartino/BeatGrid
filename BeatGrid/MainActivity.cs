@@ -8,31 +8,35 @@ using Android.Widget;
 using Android.OS;
 using Android.Graphics;
 using BeatGrid;
-using SQLite;
+using BeatGrid.ViewModel;
 
 namespace BeatGridAndroid
 {
 	[Activity(Label = "BeatGrid", MainLauncher = true, Icon = "@drawable/BeatGridLogo")]
 	public class MainActivity : Activity
 	{
-		private TableLayout beatGridTable;
-		private TableLayout.LayoutParams rowParams;
-		private TableRow.LayoutParams cellParams;
-		private TableRow.LayoutParams soundNameParams;
+		MainViewModel _mvm;
 
-		private Typeface fontAwesome;
+		private TableLayout _beatGridTable;
+		private TableLayout.LayoutParams _rowParams;
+		private TableRow.LayoutParams _cellParams;
+		private TableRow.LayoutParams _soundNameParams;
 
-		private Button homeButton;
-		private Button saveButton;
-		private Button trashButton;
-		private Button settingsButton;
-		private Button previousButton;
-		private Button playPauseButton;
-		private Button nextButton;
+		private Typeface _fontAwesome;
+
+		private Button _homeButton;
+		private Button _saveButton;
+		private Button _trashButton;
+		private Button _settingsButton;
+		private Button _previousButton;
+		private Button _playPauseButton;
+		private Button _nextButton;
 
 		protected override void OnCreate(Bundle bundle)
 		{
-			fontAwesome = Typeface.CreateFromAsset(Assets, "fontawesome-webfont.ttf");
+			_mvm = new MainViewModel();
+
+			_fontAwesome = Typeface.CreateFromAsset(Assets, "fontawesome-webfont.ttf");
 
 			base.OnCreate(bundle);
 
@@ -40,55 +44,55 @@ namespace BeatGridAndroid
 			SetContentView(Resource.Layout.Main);
 
 			InitLayout();
-			DrawGrid(Measure.GetRandomTestMeasure());
 
-			var tb = Beat.GetTestBeat();
-			var tbRow = tb.ToDbRow();
+			//DrawGrid(Measure.GetRandomTestMeasure());
+			DrawGrid(Measure.GetEmptyMeasure());
 
-			TestSQLite();
+			//TestSQLite();
 		}
 
+		// Initialize buttons and other layout items
 		private void InitLayout()
 		{
 			#region BeatGrid Table
-			beatGridTable = FindViewById<TableLayout>(Resource.Id.BeatGrid);
+			_beatGridTable = FindViewById<TableLayout>(Resource.Id.BeatGrid);
 
 			// From http://stackoverflow.com/questions/2393847/how-can-i-get-an-android-tablelayout-to-fill-the-screen
-			rowParams = new TableLayout.LayoutParams(
+			_rowParams = new TableLayout.LayoutParams(
 					ViewGroup.LayoutParams.MatchParent,
 					ViewGroup.LayoutParams.MatchParent,
 					1.0f);
 
-			cellParams = new TableRow.LayoutParams(
+			_cellParams = new TableRow.LayoutParams(
 					ViewGroup.LayoutParams.MatchParent,
 					ViewGroup.LayoutParams.MatchParent,
 					1.0f);
-			cellParams.Width = 0;
-			cellParams.SetMargins(5, 5, 5, 5);
+			_cellParams.Width = 0;
+			_cellParams.SetMargins(5, 5, 5, 5);
 
-			soundNameParams = new TableRow.LayoutParams(
+			_soundNameParams = new TableRow.LayoutParams(
 					ViewGroup.LayoutParams.MatchParent,
 					ViewGroup.LayoutParams.MatchParent,
 					2.0f);
-			soundNameParams.Width = 0;
+			_soundNameParams.Width = 0;
 			#endregion
 
 			#region Top Bar Buttons
-			homeButton = FindViewById<Button>(Resource.Id.HomeButton);
-			saveButton = FindViewById<Button>(Resource.Id.SaveButton);
-			trashButton = FindViewById<Button>(Resource.Id.TrashButton);
-			settingsButton = FindViewById<Button>(Resource.Id.SettingsButton);
-			previousButton = FindViewById<Button>(Resource.Id.PreviousButton);
-			playPauseButton = FindViewById<Button>(Resource.Id.PlayPauseButton);
-			nextButton = FindViewById<Button>(Resource.Id.NextButton);
+			_homeButton = FindViewById<Button>(Resource.Id.HomeButton);
+			_saveButton = FindViewById<Button>(Resource.Id.SaveButton);
+			_trashButton = FindViewById<Button>(Resource.Id.TrashButton);
+			_settingsButton = FindViewById<Button>(Resource.Id.SettingsButton);
+			_previousButton = FindViewById<Button>(Resource.Id.PreviousButton);
+			_playPauseButton = FindViewById<Button>(Resource.Id.PlayPauseButton);
+			_nextButton = FindViewById<Button>(Resource.Id.NextButton);
 
-			homeButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
-			saveButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
-			trashButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
-			settingsButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
-			previousButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
-			playPauseButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
-			nextButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
+			_homeButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_saveButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_trashButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_settingsButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_previousButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_playPauseButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_nextButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
 			#endregion
 
 			#region Main Menu Button
@@ -107,28 +111,62 @@ namespace BeatGridAndroid
 				var row = new TableRow(this);
 
 				// Sounds:
+				Sound sound = new Sound($"Sound {r}");
 				var soundName = new TextView(this);
-				soundName.Text = $"Sound {r}"; // Decide on max length
+				soundName.Text = sound.Name; // Decide on max length
 				soundName.Gravity = GravityFlags.CenterVertical;
 				soundName.SetPadding(10, 0, 0, 0);
-				row.AddView(soundName, soundNameParams);
+
+				soundName.Click += (sender, eventArgs) => { OnSoundTouched(sound); };
+				soundName.LongClick += (sender, eventArgs) => { OnSoundLongTouched(sound); };
+
+				row.AddView(soundName, _soundNameParams);
 
 				// Grid:
 				for (int c = 0; c < columns; c++)
 				{
-					var background = measure.Cells[r, c].On ?
-						Resource.Drawable.button_on :
-						Resource.Drawable.button_off;
+					Cell cell = measure.Cells[r, c];
 
 					var button = new Button(this);
-					button.SetBackgroundResource(background);
-					row.AddView(button, cellParams);
+					button.SetBackgroundResource(GetCellBackgroundResId(cell));
+
+					button.Click += (sender, eventArgs) => { OnCellTouched(button, cell); };
+					button.LongClick += (sender, eventArgs) => { OnCellLongTouched(cell); };
+						
+
+					row.AddView(button, _cellParams);
 				}
-				beatGridTable.AddView(row, rowParams);
+				_beatGridTable.AddView(row, _rowParams);
 			}
 		}
 
+		#region Event Handlers
+		private void OnCellTouched(View view, Cell cell)
+		{
+			_mvm.OnCellTouch(cell);
+			view.SetBackgroundResource(GetCellBackgroundResId(cell));
+		}
 
+		private void OnCellLongTouched(Cell cell)
+		{
+
+		}
+
+		private void OnSoundTouched(Sound sound)
+		{
+
+		}
+
+		private void OnSoundLongTouched(Sound sound)
+		{
+
+		}
+		#endregion
+
+		private int GetCellBackgroundResId(Cell cell)
+		{
+			return cell.On ? Resource.Drawable.button_on : Resource.Drawable.button_off;
+		}
 
 		public void TestSQLite()
 		{
@@ -150,9 +188,6 @@ namespace BeatGridAndroid
 			catch(Exception ex) { }
 		}
 
-
-
 	}
-
 }
 

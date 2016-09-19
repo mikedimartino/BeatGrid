@@ -31,6 +31,13 @@ namespace BeatGrid
 		public NoteType DivisionLevel { get; set; } // Show 32nd, 16th, or 8th notes
 		public Cell[,] Cells { get; set; }
 
+		public static Measure GetEmptyMeasure()
+		{
+			var ts = new TimeSignature(4, NoteType.Quarter);
+			var measure = new Measure(ts, NoteType.Sixteenth, 8);
+			return measure;
+		}
+
 		public static Measure GetTestMeasure()
 		{
 			var ts = new TimeSignature(4, NoteType.Quarter);
