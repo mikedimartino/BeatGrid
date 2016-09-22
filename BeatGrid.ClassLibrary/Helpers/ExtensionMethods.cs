@@ -18,6 +18,5 @@ namespace BeatGrid
 				default: return 4; // Should never happen.
 			}
 		}
-
 	}
 }

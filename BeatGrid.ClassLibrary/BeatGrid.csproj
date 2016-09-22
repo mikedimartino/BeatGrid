@@ -45,6 +45,8 @@
     <Compile Include="Model\TimeSignature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SQLiteProvider.cs" />
+    <Compile Include="ViewModel\EventRelatedTypes.cs" />
+    <Compile Include="ViewModel\IMainView.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

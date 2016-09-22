@@ -22,7 +22,12 @@ namespace BeatGrid
 			{
 				for (int c = 0; c < columns; c++)
 				{
-					Cells[r, c] = new Cell();
+					Cells[r, c] = new Cell()
+					{
+						On = false,
+						Row = r,
+						Column = c
+					};
 				}
 			}
 		}
@@ -30,6 +35,11 @@ namespace BeatGrid
 		public TimeSignature TimeSignature { get; set; }
 		public NoteType DivisionLevel { get; set; } // Show 32nd, 16th, or 8th notes
 		public Cell[,] Cells { get; set; }
+
+		public void Clear()
+		{
+			foreach (Cell cell in Cells) cell.On = false;
+		}
 
 		public static Measure GetEmptyMeasure()
 		{

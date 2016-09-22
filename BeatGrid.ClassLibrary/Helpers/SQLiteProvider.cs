@@ -33,6 +33,14 @@ namespace BeatGrid
 				.Select(r => JsonConvert.DeserializeObject<Beat>(r.Json)).ToList();
 		}
 
+		public void DeleteAllBeats()
+		{
+			foreach(var beat in GetAllBeats())
+			{
+				_connection.Delete(beat);
+			}
+		}
+
 		public void SaveBeat(Beat beat)
 		{
 			// Need to figure out case where it is a new insert and get the id
