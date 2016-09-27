@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-    <!--<Button
+<!--<Button
         android:id="@+id/MainMenuButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,15 +19,15 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:weightSum="20">
-				<!-- Top Bar-->
-				<RelativeLayout
+    <!-- Top Bar-->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
             android:background="@color/topBarBackground">
-						<!-- Beat name and info (measure x of y) -->
+        <!-- Beat name and info (measure x of y) -->
             <LinearLayout
-								android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_alignParentLeft="true"
@@ -47,33 +47,39 @@
                     android:textColor="@color/black"
                     android:textSize="20sp" />
             </LinearLayout>
-						<!-- End Beat name and info (measure x of y) -->
-						<!-- Buttons -->
-						<LinearLayout
-								android:layout_width="wrap_content"
-								android:layout_height="match_parent"
+        <!-- End Beat name and info (measure x of y) -->
+        <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_alignParentRight="true"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
-							<Button
-									android:id="@+id/HomeButton"
-									android:layout_width="wrap_content"
-									android:layout_height="match_parent"
-									android:textSize="32dp"
-									android:text="@string/icon_home" />
-							<Button
+                <Button
+                    android:id="@+id/OpenButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="32dp"
+                    android:text="@string/icon_open" />
+                <Button
                     android:id="@+id/SaveButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="32dp"
                     android:text="@string/icon_save" />
-							<Button
+								<Button
+                    android:id="@+id/XButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="32dp"
+                    android:text="@string/icon_x" />
+                <!--<Button
                     android:id="@+id/TrashButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="32dp"
-                    android:text="@string/icon_trash" />
+                    android:text="@string/icon_trash" />-->
                 <Button
                     android:id="@+id/SettingsButton"
                     android:layout_width="wrap_content"

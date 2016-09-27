@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/clear_measure_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+				android:paddingTop="30dp"
+				android:paddingBottom="30dp"
+				android:paddingLeft="140dp"
+				android:paddingRight="140dp"
+        android:text="Clear Measure" />
+    <Button
+        android:id="@+id/delete_measure_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+				android:paddingTop="30dp"
+				android:paddingBottom="30dp"
+				android:paddingLeft="140dp"
+				android:paddingRight="140dp"
+        android:text="Delete Measure" />
+    <Button
+        android:id="@+id/delete_beat_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+				android:paddingTop="30dp"
+				android:paddingBottom="30dp"
+				android:paddingLeft="140dp"
+				android:paddingRight="140dp"
+        android:text="Delete Beat" />
+    <!--<Button
+        android:id="@+id/cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+				android:paddingTop="30dp"
+				android:paddingBottom="30dp"
+				android:paddingLeft="140dp"
+				android:paddingRight="140dp"
+        android:text="Cancel" />-->
+</LinearLayout>

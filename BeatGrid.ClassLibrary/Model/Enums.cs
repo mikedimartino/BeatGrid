@@ -11,4 +11,11 @@
 		Sixteenth,
 		ThirtySecond
 	}
+
+	public enum XOption
+	{
+		ClearMeasure,
+		DeleteMeasure,
+		DeleteBeat
+	}
 }

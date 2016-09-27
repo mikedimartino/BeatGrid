@@ -20,8 +20,13 @@ namespace BeatGrid.ViewModel
 			_view.CellLongTouched += OnCellLongTouch;
 			_view.SoundTouched += OnSoundTouch;
 			_view.SoundLongTouched += OnSoundLongTouch;
+			_view.ClearMeasureSelected += OnClearMeasure;
+			_view.DeleteMeasureSelected += OnDeleteMeasure;
+			_view.DeleteBeatSelected += OnDeleteBeat;
+			_view.OpenBeatSelected += OnOpenBeat;
 
 			var beat = _provider.GetAllBeats().FirstOrDefault();
+			CurrentMeasure = beat?.Measures.First() ?? Measure.GetEmptyMeasure();
 		}
 
 		#region Public Properties
@@ -37,7 +42,7 @@ namespace BeatGrid.ViewModel
 
 		public void OnCellChanged(Cell cell)
 		{
-			CellChanged?.Invoke(this, new CellEventArgs() { Cell = cell });
+			CellChanged?.Invoke(this, new CellEventArgs(cell));
 		}
 		#endregion
 
@@ -59,7 +64,7 @@ namespace BeatGrid.ViewModel
 
 		public void OnMeasureChanged(Measure measure)
 		{
-			MeasureChanged?.Invoke(this, new MeasureEventArgs() { Measure = measure });
+			MeasureChanged?.Invoke(this, new MeasureEventArgs(measure));
 		}
 		#endregion
 
@@ -68,7 +73,7 @@ namespace BeatGrid.ViewModel
 
 		public event BeatChangedEventHandler BeatChanged;
 
-		protected virtual void OnBeatChanged(Beat beat)
+		public void OnBeatChanged(Beat beat)
 		{
 			BeatChanged?.Invoke(this, new BeatEventArgs() { Beat = beat });
 		}
@@ -96,9 +101,32 @@ namespace BeatGrid.ViewModel
 			//TODO: Implement
 		}
 
+		public void OnClearMeasure(object source, EventArgs e)
+		{
+			CurrentMeasure.Clear();
+			OnMeasureChanged(CurrentMeasure);
+		}
+
+		public void OnDeleteMeasure(object source, EventArgs e)
+		{
+			//TODO: Implement
+		}
+
+		public void OnDeleteBeat(object source, EventArgs e)
+		{
+			//TODO: Implement
+		}
+
 		public void OnSaveClick()
 		{
+			//TODO: Implement
+		}
 
+		public void OnOpenBeat(object source, BeatEventArgs e)
+		{
+			int beatId = e.Id;
+			OnBeatChanged(Beat.GetTestBeat());
+			//TODO: Load beat from db and 
 		}
 		#endregion
 	}

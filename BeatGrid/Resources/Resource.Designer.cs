@@ -517,11 +517,17 @@ namespace BeatGridAndroid
 			// aapt resource value: 0x7f070007
 			public const int BeatGrid = 2131165191;
 			
-			// aapt resource value: 0x7f070000
-			public const int HomeButton = 2131165184;
+			// aapt resource value: 0x7f070008
+			public const int BeatList = 2131165192;
 			
 			// aapt resource value: 0x7f070006
 			public const int NextButton = 2131165190;
+			
+			// aapt resource value: 0x7f070009
+			public const int OpenBeatTextViewItem = 2131165193;
+			
+			// aapt resource value: 0x7f070000
+			public const int OpenButton = 2131165184;
 			
 			// aapt resource value: 0x7f070005
 			public const int PlayPauseButton = 2131165189;
@@ -536,7 +542,16 @@ namespace BeatGridAndroid
 			public const int SettingsButton = 2131165187;
 			
 			// aapt resource value: 0x7f070002
-			public const int TrashButton = 2131165186;
+			public const int XButton = 2131165186;
+			
+			// aapt resource value: 0x7f07000a
+			public const int clear_measure_button = 2131165194;
+			
+			// aapt resource value: 0x7f07000c
+			public const int delete_beat_button = 2131165196;
+			
+			// aapt resource value: 0x7f07000b
+			public const int delete_measure_button = 2131165195;
 			
 			static Id()
 			{
@@ -553,6 +568,15 @@ namespace BeatGridAndroid
 			
 			// aapt resource value: 0x7f030000
 			public const int Main = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int OpenBeatDialog = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int OpenBeatTextViewItem = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int XDialog = 2130903043;
 			
 			static Layout()
 			{
@@ -591,6 +615,9 @@ namespace BeatGridAndroid
 			// aapt resource value: 0x7f050008
 			public const int icon_next = 2131034120;
 			
+			// aapt resource value: 0x7f05000f
+			public const int icon_open = 2131034127;
+			
 			// aapt resource value: 0x7f050004
 			public const int icon_pause = 2131034116;
 			
@@ -611,6 +638,9 @@ namespace BeatGridAndroid
 			
 			// aapt resource value: 0x7f050005
 			public const int icon_trash = 2131034117;
+			
+			// aapt resource value: 0x7f050010
+			public const int icon_x = 2131034128;
 			
 			static String()
 			{

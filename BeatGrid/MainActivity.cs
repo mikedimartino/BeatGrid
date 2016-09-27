@@ -25,9 +25,10 @@ namespace BeatGridAndroid
 
 		private Typeface _fontAwesome;
 		
-		private Button _homeButton; 
+		private Button _openButton; 
 		private Button _saveButton;
-		private Button _trashButton;
+		private Button _xButton;
+		//private Button _trashButton;
 		private Button _settingsButton;
 		private Button _previousButton;
 		private Button _playPauseButton;
@@ -39,8 +40,12 @@ namespace BeatGridAndroid
 		{
 			base.OnCreate(bundle);
 
+			Window.RequestFeature(WindowFeatures.NoTitle);
+
 			_mvm = new MainViewModel(GetSQLiteProvider(), this);
 			_mvm.CellChanged += OnCellChanged;
+			_mvm.MeasureChanged += OnMeasureChanged;
+			_mvm.BeatChanged += OnBeatChanged;
 
 			_fontAwesome = Typeface.CreateFromAsset(Assets, "fontawesome-webfont.ttf");
 
@@ -50,7 +55,7 @@ namespace BeatGridAndroid
 
 			_cellButtons = new Dictionary<string, Button>();
 
-			DrawGrid(Measure.GetEmptyMeasure());
+			DrawMeasure(Measure.GetEmptyMeasure());
 		}
 
 		// Initialize buttons and other layout items
@@ -80,32 +85,40 @@ namespace BeatGridAndroid
 			#endregion
 
 			#region Top Bar Buttons
-			_homeButton = FindViewById<Button>(Resource.Id.HomeButton);
 			_saveButton = FindViewById<Button>(Resource.Id.SaveButton);
-			_trashButton = FindViewById<Button>(Resource.Id.TrashButton);
-			_settingsButton = FindViewById<Button>(Resource.Id.SettingsButton);
-			_previousButton = FindViewById<Button>(Resource.Id.PreviousButton);
-			_playPauseButton = FindViewById<Button>(Resource.Id.PlayPauseButton);
-			_nextButton = FindViewById<Button>(Resource.Id.NextButton);
-
-			_homeButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
 			_saveButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
-			_trashButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_saveButton.Click += OnSaveBeatClicked;
+
+			_settingsButton = FindViewById<Button>(Resource.Id.SettingsButton);
 			_settingsButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_settingsButton.Click += OnSettingsClicked;
+
+			_openButton = FindViewById<Button>(Resource.Id.OpenButton);
+			_openButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_openButton.Click += OnOpenBeatClicked;
+
+			_xButton = FindViewById<Button>(Resource.Id.XButton);
+			_xButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_xButton.Click += OnXClicked;
+
+			_previousButton = FindViewById<Button>(Resource.Id.PreviousButton);
 			_previousButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+
+			_playPauseButton = FindViewById<Button>(Resource.Id.PlayPauseButton);
 			_playPauseButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+
+			_nextButton = FindViewById<Button>(Resource.Id.NextButton);
 			_nextButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+
 			#endregion
 
-			#region Main Menu Button
-			//mainMenuButton = FindViewById<Button>(Resource.Id.MainMenuButton);
-			//mainMenuButton.SetTypeface(fontAwesome, TypefaceStyle.Normal);
-			#endregion
 		}
 
-		private void DrawGrid(Measure measure)
+		private void DrawMeasure(Measure measure) //TODO: Change to DrawBeat(Beat beat, int measure)
 		{
+			// Wherever this is called should be async and show a loading screen while this code is run
 			_cellButtons.Clear();
+			_beatGridTable.RemoveAllViews();
 
 			int rows = measure.Cells.GetLength(0);
 			int columns = measure.Cells.GetLength(1);
@@ -150,6 +163,17 @@ namespace BeatGridAndroid
 		{
 			DrawCell(e.Cell);
 		}
+
+		private void OnMeasureChanged(object source, MeasureEventArgs e)
+		{
+			foreach (var cell in e.Measure.Cells) DrawCell(cell);
+		}
+
+		private void OnBeatChanged(object source, BeatEventArgs e)
+		{
+			OnMeasureChanged(this, new MeasureEventArgs(e.Beat.CurrentMeasure));
+			//TODO: Handle other stuff
+		}
 		#endregion
 
 		#region To ViewModel
@@ -157,14 +181,14 @@ namespace BeatGridAndroid
 		public event CellTouchedEventHandler CellTouched;
 		public void OnCellTouched(Cell cell)
 		{
-			CellTouched?.Invoke(this, new CellEventArgs() { Cell = cell });
+			CellTouched?.Invoke(this, new CellEventArgs(cell));
 		}
 		#endregion
 		#region CellLongTouched
 		public event CellLongTouchedEventHandler CellLongTouched;
 		public void OnCellLongTouched(Cell cell)
 		{
-			CellLongTouched?.Invoke(this, new CellEventArgs() { Cell = cell });
+			CellLongTouched?.Invoke(this, new CellEventArgs(cell));
 		}
 		#endregion
 		#region SoundTouched
@@ -181,9 +205,74 @@ namespace BeatGridAndroid
 			SoundLongTouched?.Invoke(this, new SoundEventArgs() { Sound = Sound });
 		}
 		#endregion
+
+		#region XClicked
+		public void OnXClicked(object sender, EventArgs e)
+		{
+			var transaction = FragmentManager.BeginTransaction();
+			var xDialog = new XDialogFragment();
+			xDialog.XOptionSelected += OnXSelectionMade;
+			xDialog.Show(transaction, "x_dialog_fragment");
+		}
+
+		public event ClearMeasureSelectedEventHandler ClearMeasureSelected;
+		public event DeleteMeasureSelectedEventHandler DeleteMeasureSelected;
+		public event DeleteBeatSelectedEventHandler DeleteBeatSelected;
+
+		public void OnXSelectionMade(object source, XOptionEventArgs e)
+		{
+			switch (e.Option)
+			{
+				case XOption.ClearMeasure:
+					ClearMeasureSelected?.Invoke(this, EventArgs.Empty);
+					break;
+				case XOption.DeleteMeasure:
+					DeleteMeasureSelected?.Invoke(this, EventArgs.Empty);
+					break;
+				case XOption.DeleteBeat:
+					DeleteBeatSelected?.Invoke(this, EventArgs.Empty);
+					break;
+			}
+		}
+		#endregion
+
+
+		#region OpenBeat
+		public void OnOpenBeatClicked(object sender, EventArgs e)
+		{
+			var transaction = FragmentManager.BeginTransaction();
+			var openBeatDialog = new OpenBeatDialogFragment();
+			openBeatDialog.BeatSelected += OnOpenBeatSelected;
+			openBeatDialog.Show(transaction, "open_beat_dialog_fragment");
+		}
+
+		public event OpenBeatSelectedEventHandler OpenBeatSelected;
+
+		public void OnOpenBeatSelected(object source, BeatEventArgs e)
+		{
+			OpenBeatSelected?.Invoke(this, new BeatEventArgs() { Id = e.Id });
+			//TODO: Show prompt if unsaved changes.
+			//TODO: Open beat.
+		}
+		#endregion
+
+		#region SaveBeat
+		public void OnSaveBeatClicked(object sender, EventArgs e)
+		{
+		}
+		#endregion
+
+		#region Settings
+		public void OnSettingsClicked(object sender, EventArgs e)
+		{
+		}
+		#endregion
+
+
 		#endregion
 		#endregion
 
+		// Assumes that the cell coordinate will map to an existing position in the measure
 		private void DrawCell(Cell cell)
 		{
 			int backgroundResId = cell.On ? Resource.Drawable.button_on : Resource.Drawable.button_off;
@@ -221,7 +310,7 @@ namespace BeatGridAndroid
 				var beats = provider.GetAllBeats();
 				var firstBeat = provider.GetBeat(beats.First().Id);
 			}
-			catch(Exception ex) { }
+			catch(Exception) { }
 		}
 
 	}
