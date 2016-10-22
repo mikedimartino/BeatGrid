@@ -19,5 +19,5 @@
 	<string name ="icon_home">&#xf015;</string>
 	<string name ="icon_open">&#xf115;</string>
 	<string name ="icon_x">&#xf00d;</string>
-
+	<string name ="icon_check">&#xf00c;</string>
 </resources>

@@ -9,22 +9,10 @@ namespace BeatGrid.ViewModel
 	public class MainViewModel
 	{
 		private SQLiteProvider _provider;
-		private IMainView _view;
 
-		public MainViewModel(SQLiteProvider provider, IMainView view)
+		public MainViewModel(SQLiteProvider provider)
 		{
 			_provider = provider;
-
-			_view = view;
-			_view.CellTouched += OnCellTouch;
-			_view.CellLongTouched += OnCellLongTouch;
-			_view.SoundTouched += OnSoundTouch;
-			_view.SoundLongTouched += OnSoundLongTouch;
-			_view.ClearMeasureSelected += OnClearMeasure;
-			_view.DeleteMeasureSelected += OnDeleteMeasure;
-			_view.DeleteBeatSelected += OnDeleteBeat;
-			_view.OpenBeatSelected += OnOpenBeat;
-
 			var beat = _provider.GetAllBeats().FirstOrDefault();
 			CurrentMeasure = beat?.Measures.First() ?? Measure.GetEmptyMeasure();
 		}
@@ -80,39 +68,24 @@ namespace BeatGrid.ViewModel
 		#endregion
 
 
-		public void OnCellTouch(object source, CellEventArgs e)
+		public void ToggleCell(Cell cell)
 		{
-			e.Cell.On = !e.Cell.On;
-			OnCellChanged(e.Cell);
+			cell.On = !cell.On;
+			OnCellChanged(cell);
 		}
 
-		public void OnCellLongTouch(object source, CellEventArgs e)
-		{
-			//TODO: Implement
-		}
-
-		public void OnSoundTouch(object source, SoundEventArgs e)
-		{
-			//TODO: Implement
-		}
-
-		public void OnSoundLongTouch(object source, SoundEventArgs e)
-		{
-			//TODO: Implement
-		}
-
-		public void OnClearMeasure(object source, EventArgs e)
+		public void ClearCurrentMeasure()
 		{
 			CurrentMeasure.Clear();
 			OnMeasureChanged(CurrentMeasure);
 		}
 
-		public void OnDeleteMeasure(object source, EventArgs e)
+		public void DeleteCurrentMeasure()
 		{
 			//TODO: Implement
 		}
 
-		public void OnDeleteBeat(object source, EventArgs e)
+		public void DeleteCurrentBeat()
 		{
 			//TODO: Implement
 		}
@@ -122,11 +95,10 @@ namespace BeatGrid.ViewModel
 			//TODO: Implement
 		}
 
-		public void OnOpenBeat(object source, BeatEventArgs e)
+		public void OpenBeat(int beatId)
 		{
-			int beatId = e.Id;
 			OnBeatChanged(Beat.GetTestBeat());
-			//TODO: Load beat from db and 
+			//TODO: Load beat from db 
 		}
 		#endregion
 	}

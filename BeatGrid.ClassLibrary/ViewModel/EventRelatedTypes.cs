@@ -37,8 +37,15 @@ namespace BeatGrid.ViewModel
 		public BeatEventArgs() { }
 		public BeatEventArgs(Beat beat) { Beat = beat; }
 
-		public int Id { get; set; }
 		public Beat Beat { get; set; }
+	}
+
+	public class OpenBeatEventArgs : EventArgs
+	{
+		public OpenBeatEventArgs() { }
+		public OpenBeatEventArgs(int beatId) { Id = beatId; }
+
+		public int Id { get; set; }
 	}
 
 	public delegate void ClearMeasureSelectedEventHandler(object source, EventArgs args);

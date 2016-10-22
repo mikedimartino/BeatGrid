@@ -10,11 +10,12 @@ using Android.Graphics;
 using BeatGrid;
 using BeatGrid.ViewModel;
 using System.Collections.Generic;
+using Android.Media;
 
 namespace BeatGridAndroid
 {
 	[Activity(Label = "BeatGrid", MainLauncher = true, Icon = "@drawable/BeatGridLogo")]
-	public class MainActivity : Activity, IMainView
+	public class MainActivity : Activity
 	{
 		private MainViewModel _mvm;
 
@@ -42,7 +43,8 @@ namespace BeatGridAndroid
 
 			Window.RequestFeature(WindowFeatures.NoTitle);
 
-			_mvm = new MainViewModel(GetSQLiteProvider(), this);
+			_mvm = new MainViewModel(GetSQLiteProvider());
+
 			_mvm.CellChanged += OnCellChanged;
 			_mvm.MeasureChanged += OnMeasureChanged;
 			_mvm.BeatChanged += OnBeatChanged;
@@ -56,6 +58,8 @@ namespace BeatGridAndroid
 			_cellButtons = new Dictionary<string, Button>();
 
 			DrawMeasure(Measure.GetEmptyMeasure());
+
+			InitSoundPool();
 		}
 
 		// Initialize buttons and other layout items
@@ -85,6 +89,7 @@ namespace BeatGridAndroid
 			#endregion
 
 			#region Top Bar Buttons
+			// Maybe just call MVM directly instead of these events?
 			_saveButton = FindViewById<Button>(Resource.Id.SaveButton);
 			_saveButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
 			_saveButton.Click += OnSaveBeatClicked;
@@ -128,14 +133,14 @@ namespace BeatGridAndroid
 				var row = new TableRow(this);
 
 				// Sounds:
-				Sound sound = new Sound($"Sound {r}");
+				Sound sound = new Sound($"Sound {r}", -1);
 				var soundName = new TextView(this);
 				soundName.Text = sound.Name; // Decide on max length
 				soundName.Gravity = GravityFlags.CenterVertical;
 				soundName.SetPadding(10, 0, 0, 0);
 
-				soundName.Click += (sender, eventArgs) => { OnSoundTouched(sound); };
-				soundName.LongClick += (sender, eventArgs) => { OnSoundLongTouched(sound); };
+				soundName.Click += (sender, eventArgs) => { OnSoundClicked(sound); };
+				soundName.LongClick += (sender, eventArgs) => { OnSoundLongClicked(sound); };
 
 				row.AddView(soundName, _soundNameParams);
 
@@ -145,8 +150,9 @@ namespace BeatGridAndroid
 					Cell cell = measure.Cells[r, c];
 
 					var button = new Button(this);
-					button.Click += (sender, eventArgs) => { OnCellTouched(cell); };
-					button.LongClick += (sender, eventArgs) => { OnCellLongTouched(cell); };
+					button.Click += (sender, eventArgs) => { OnCellClicked(cell); };
+
+					
 					_cellButtons.Add(cell.GetCoordinate(), button);
 
 					row.AddView(button, _cellParams);
@@ -158,7 +164,6 @@ namespace BeatGridAndroid
 		}
 
 		#region Event Handlers
-		#region From ViewModel
 		private void OnCellChanged(object source, CellEventArgs e)
 		{
 			DrawCell(e.Cell);
@@ -174,37 +179,24 @@ namespace BeatGridAndroid
 			OnMeasureChanged(this, new MeasureEventArgs(e.Beat.CurrentMeasure));
 			//TODO: Handle other stuff
 		}
-		#endregion
 
-		#region To ViewModel
-		#region CellTouched
-		public event CellTouchedEventHandler CellTouched;
-		public void OnCellTouched(Cell cell)
+		private void OnCellClicked(Cell cell)
 		{
-			CellTouched?.Invoke(this, new CellEventArgs(cell));
+			_mvm.ToggleCell(cell);
 		}
-		#endregion
-		#region CellLongTouched
-		public event CellLongTouchedEventHandler CellLongTouched;
-		public void OnCellLongTouched(Cell cell)
+
+		private void OnSoundClicked(Sound sound)
 		{
-			CellLongTouched?.Invoke(this, new CellEventArgs(cell));
+			//TODO: Implement
 		}
-		#endregion
-		#region SoundTouched
-		public event SoundTouchedEventHandler SoundTouched;
-		public void OnSoundTouched(Sound Sound)
+
+		private void OnSoundLongClicked(Sound sound)
 		{
-			SoundTouched?.Invoke(this, new SoundEventArgs() { Sound = Sound });
+			//TODO: Implement
+			var transaction = FragmentManager.BeginTransaction();
+			var selectSoundDialog = new SelectSoundDialogFragment();
+			selectSoundDialog.Show(transaction, "select_sound_dialog_fragment");
 		}
-		#endregion
-		#region SoundLongTouched
-		public event SoundLongTouchedEventHandler SoundLongTouched;
-		public void OnSoundLongTouched(Sound Sound)
-		{
-			SoundLongTouched?.Invoke(this, new SoundEventArgs() { Sound = Sound });
-		}
-		#endregion
 
 		#region XClicked
 		public void OnXClicked(object sender, EventArgs e)
@@ -215,22 +207,18 @@ namespace BeatGridAndroid
 			xDialog.Show(transaction, "x_dialog_fragment");
 		}
 
-		public event ClearMeasureSelectedEventHandler ClearMeasureSelected;
-		public event DeleteMeasureSelectedEventHandler DeleteMeasureSelected;
-		public event DeleteBeatSelectedEventHandler DeleteBeatSelected;
-
 		public void OnXSelectionMade(object source, XOptionEventArgs e)
 		{
 			switch (e.Option)
 			{
 				case XOption.ClearMeasure:
-					ClearMeasureSelected?.Invoke(this, EventArgs.Empty);
+					_mvm.ClearCurrentMeasure();
 					break;
 				case XOption.DeleteMeasure:
-					DeleteMeasureSelected?.Invoke(this, EventArgs.Empty);
+					_mvm.DeleteCurrentMeasure();
 					break;
 				case XOption.DeleteBeat:
-					DeleteBeatSelected?.Invoke(this, EventArgs.Empty);
+					_mvm.DeleteCurrentBeat();
 					break;
 			}
 		}
@@ -238,6 +226,11 @@ namespace BeatGridAndroid
 
 
 		#region OpenBeat
+		/// <summary>
+		/// Called when the open beat button is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public void OnOpenBeatClicked(object sender, EventArgs e)
 		{
 			var transaction = FragmentManager.BeginTransaction();
@@ -246,11 +239,14 @@ namespace BeatGridAndroid
 			openBeatDialog.Show(transaction, "open_beat_dialog_fragment");
 		}
 
-		public event OpenBeatSelectedEventHandler OpenBeatSelected;
-
-		public void OnOpenBeatSelected(object source, BeatEventArgs e)
+		/// <summary>
+		/// Called when user has selected a beat in the open beat dialog.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="e"></param>
+		public void OnOpenBeatSelected(object source, OpenBeatEventArgs e)
 		{
-			OpenBeatSelected?.Invoke(this, new BeatEventArgs() { Id = e.Id });
+			_mvm.OpenBeat(e.Id);
 			//TODO: Show prompt if unsaved changes.
 			//TODO: Open beat.
 		}
@@ -259,17 +255,20 @@ namespace BeatGridAndroid
 		#region SaveBeat
 		public void OnSaveBeatClicked(object sender, EventArgs e)
 		{
+			TestSoundPool();
 		}
 		#endregion
 
 		#region Settings
 		public void OnSettingsClicked(object sender, EventArgs e)
 		{
+			var transaction = FragmentManager.BeginTransaction();
+			var beatSettingsDialog = new BeatSettingsDialogFragment();
+			beatSettingsDialog.Show(transaction, "beat_settings_dialog_fragment");
 		}
 		#endregion
 
 
-		#endregion
 		#endregion
 
 		// Assumes that the cell coordinate will map to an existing position in the measure
@@ -312,6 +311,27 @@ namespace BeatGridAndroid
 			}
 			catch(Exception) { }
 		}
+
+		SoundPool soundPool;
+		int soundId1;
+		int soundId2;
+		int soundId3;
+		int soundId4;
+
+		public void TestSoundPool()
+		{
+			soundPool.Play(soundId1, 1, 1, 0, 0, 1);
+		}
+
+		public void InitSoundPool()
+		{
+			soundPool = new SoundPool(8, Stream.Music, 0);
+			soundId1 = soundPool.Load(this, Resource.Raw.clhat01, 1);
+			soundId2 = soundPool.Load(this, Resource.Raw.ride1, 1);
+			soundId3 = soundPool.Load(this, Resource.Raw.snare01, 1);
+			soundId4 = soundPool.Load(this, Resource.Raw.kick01, 1);
+		}
+
 
 	}
 }

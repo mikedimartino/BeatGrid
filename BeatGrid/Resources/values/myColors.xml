@@ -3,4 +3,6 @@
 	<color name="topBarBackground">#999999</color>
 	<color name="timeCursorBackground">#1a1a1a</color>
 	<color name="gridBackground">#1a1a1a</color>
+	<color name="expListViewHeaderBackground">#1a1a1a</color>
+	<color name="expListViewItemBackground">#999999</color>
 </resources>

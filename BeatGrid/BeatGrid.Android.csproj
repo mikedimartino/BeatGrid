@@ -66,9 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OpenBeatFragment.cs" />
-    <Compile Include="XDialogFragment.cs" />
-    <Compile Include="MainActivity.cs" />
+    <Compile Include="CSharp Files\BeatSettingsDialogFragment.cs" />
+    <Compile Include="CSharp Files\ExpandableListAdapter.cs" />
+    <Compile Include="CSharp Files\OpenBeatFragment.cs" />
+    <Compile Include="CSharp Files\SelectSoundDialogFragment.cs" />
+    <Compile Include="CSharp Files\XDialogFragment.cs" />
+    <Compile Include="CSharp Files\MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -88,6 +91,56 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\OpenBeatTextViewItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\XOptionTextViewItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\BeatSettingsDialog.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\raw\bell1.ogg" />
+    <AndroidResource Include="Resources\raw\bell2.ogg" />
+    <AndroidResource Include="Resources\raw\clhat01.ogg" />
+    <AndroidResource Include="Resources\raw\clhat02.ogg" />
+    <AndroidResource Include="Resources\raw\clhat03.ogg" />
+    <AndroidResource Include="Resources\raw\clhat04.ogg" />
+    <AndroidResource Include="Resources\raw\crash1.ogg" />
+    <AndroidResource Include="Resources\raw\crash2.ogg" />
+    <AndroidResource Include="Resources\raw\crash3.ogg" />
+    <AndroidResource Include="Resources\raw\crash4.ogg" />
+    <AndroidResource Include="Resources\raw\crash5.ogg" />
+    <AndroidResource Include="Resources\raw\hightom1.ogg" />
+    <AndroidResource Include="Resources\raw\hightom2.ogg" />
+    <AndroidResource Include="Resources\raw\kick01.ogg" />
+    <AndroidResource Include="Resources\raw\kick02.ogg" />
+    <AndroidResource Include="Resources\raw\kick03.ogg" />
+    <AndroidResource Include="Resources\raw\kick04.ogg" />
+    <AndroidResource Include="Resources\raw\lowtom1.ogg" />
+    <AndroidResource Include="Resources\raw\lowtom2.ogg" />
+    <AndroidResource Include="Resources\raw\midtom1.ogg" />
+    <AndroidResource Include="Resources\raw\midtom2.ogg" />
+    <AndroidResource Include="Resources\raw\midtom3.ogg" />
+    <AndroidResource Include="Resources\raw\ophat01.ogg" />
+    <AndroidResource Include="Resources\raw\ophat02.ogg" />
+    <AndroidResource Include="Resources\raw\ophat03.ogg" />
+    <AndroidResource Include="Resources\raw\ophat04.ogg" />
+    <AndroidResource Include="Resources\raw\ride1.ogg" />
+    <AndroidResource Include="Resources\raw\ride2.ogg" />
+    <AndroidResource Include="Resources\raw\sidestick1.ogg" />
+    <AndroidResource Include="Resources\raw\sidestick2.ogg" />
+    <AndroidResource Include="Resources\raw\sidestick3.ogg" />
+    <AndroidResource Include="Resources\raw\snare01.ogg" />
+    <AndroidResource Include="Resources\raw\snare02.ogg" />
+    <AndroidResource Include="Resources\raw\snare03.ogg" />
+    <AndroidResource Include="Resources\raw\snare04.ogg" />
+    <AndroidResource Include="Resources\layout\ExpandableListViewHeader.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ExpandableListViewItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SelectSoundDialog.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -132,6 +185,16 @@
       <Project>{cb4894f8-f2cb-43b5-95c1-53c097f23890}</Project>
       <Name>BeatGrid</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\bd0000.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\ch0.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\sd0000.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,37 +3,44 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <Button
+
+	<ListView
+			android:id="@+id/XOptionList"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" />
+
+	<!--<Button
         android:id="@+id/clear_measure_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-				android:paddingTop="30dp"
-				android:paddingBottom="30dp"
-				android:paddingLeft="140dp"
-				android:paddingRight="140dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="140dp"
+        android:paddingRight="140dp"
         android:text="Clear Measure" />
     <Button
         android:id="@+id/delete_measure_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-				android:paddingTop="30dp"
-				android:paddingBottom="30dp"
-				android:paddingLeft="140dp"
-				android:paddingRight="140dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="140dp"
+        android:paddingRight="140dp"
         android:text="Delete Measure" />
     <Button
         android:id="@+id/delete_beat_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-				android:paddingTop="30dp"
-				android:paddingBottom="30dp"
-				android:paddingLeft="140dp"
-				android:paddingRight="140dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="140dp"
+        android:paddingRight="140dp"
         android:text="Delete Beat" />
-    <!--<Button
+-->
+	<!--<Button
         android:id="@+id/cancel_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

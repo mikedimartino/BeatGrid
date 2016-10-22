@@ -15,7 +15,7 @@ namespace BeatGridAndroid
 	{
 		public Dictionary<string, int> BeatNameIds { get; set; }
 
-		ListView _beatNamesList;
+		private ListView _beatNamesList;
 
 		public event BeatSelectedEventHandler BeatSelected;
 
@@ -54,16 +54,16 @@ namespace BeatGridAndroid
 			// END TEMP
 
 			string[] beatNames = BeatNameIds.Keys.ToArray();
-			ArrayAdapter<string> adapter = new ArrayAdapter<string>(Activity, Resource.Layout.OpenBeatTextViewItem, beatNames);
+			var adapter = new ArrayAdapter<string>(Activity, Resource.Layout.OpenBeatTextViewItem, beatNames);
 			_beatNamesList.Adapter = adapter;
 
 			_beatNamesList.ItemClick += (sender, args) =>
 			{
 				string beatName = (string)_beatNamesList.GetItemAtPosition(args.Position);
-				BeatSelected?.Invoke(this, new BeatEventArgs() { Id = BeatNameIds[beatName] });
+				BeatSelected?.Invoke(this, new OpenBeatEventArgs() { Id = BeatNameIds[beatName] });
 				Dismiss();
 			};
 		}
 	}
-	public delegate void BeatSelectedEventHandler(object source, BeatEventArgs args);
+	public delegate void BeatSelectedEventHandler(object source, OpenBeatEventArgs args);
 }

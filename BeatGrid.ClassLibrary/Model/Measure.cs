@@ -81,7 +81,7 @@ namespace BeatGrid
 			{
 				for (int j = 0; j < measure.Cells.GetLength(1); j++)
 				{
-					measure.Cells[i, j].On = rand.Next(0, 3) == 0; // on average one third of the squares should be filled
+					measure.Cells[i, j].On = rand.Next(0, 6) == 0;
 				}
 			}
 

@@ -2,6 +2,8 @@
 {
 	public interface IMainView
 	{
+
+		//TODO: Delete this. Unnecessary.
 		event CellTouchedEventHandler CellTouched;
 		event CellLongTouchedEventHandler CellLongTouched;
 		event SoundTouchedEventHandler SoundTouched;
@@ -9,6 +11,6 @@
 		event ClearMeasureSelectedEventHandler ClearMeasureSelected;
 		event DeleteMeasureSelectedEventHandler DeleteMeasureSelected;
 		event DeleteBeatSelectedEventHandler DeleteBeatSelected;
-		event OpenBeatSelectedEventHandler OpenBeatSelected;
+		//event OpenBeatSelectedEventHandler OpenBeatSelected;
 	}
 }

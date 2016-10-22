@@ -8,6 +8,8 @@ namespace BeatGrid
 {
 	public class Beat
 	{
+		public const int MAX_SOUNDS = 8;
+
 		public Beat() { }
 		public Beat(string name) { throw new NotImplementedException(); }
 		public Beat(string name, List<Measure> measures, TimeSignature timeSignature, NoteType divisionLevel, int measureCount)
@@ -18,6 +20,7 @@ namespace BeatGrid
 			DivisionLevel = divisionLevel;
 			Measures = measures;
 			CurrentMeasureIndex = 0;
+			Sounds = new Sound[MAX_SOUNDS];
 		}
 		public Beat(List<Measure> measures)
 		{
@@ -25,6 +28,7 @@ namespace BeatGrid
 			Name = "_UNNAMED";
 			Measures = measures;
 			CurrentMeasureIndex = 0;
+			Sounds = new Sound[MAX_SOUNDS];
 		}
 
 		public string Name { get; set; }
@@ -35,6 +39,8 @@ namespace BeatGrid
 		public TimeSignature TimeSignature { get; set; }
 		public NoteType DivisionLevel { get; set; } // Show 32nd, 16th, or 8th notes
 		public List<Measure> Measures { get; set; }
+
+		public Sound[] Sounds { get; set; }
 
 		public BeatDbRow ToDbRow()
 		{
@@ -58,7 +64,9 @@ namespace BeatGrid
 			{
 				measures.Add(Measure.GetRandomTestMeasure());
 			}
-			return new Beat(measures);
+
+			Beat beat = new Beat(measures);
+			return beat;
 		}
 
 	}

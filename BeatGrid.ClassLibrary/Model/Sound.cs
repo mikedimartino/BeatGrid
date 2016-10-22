@@ -9,12 +9,13 @@ namespace BeatGrid
 	public class Sound
 	{
 		public Sound() { }
-		public Sound(string name)
+		public Sound(string name, int id)
 		{
 			Name = name;
+			Id = id;
 		}
 
 		public string Name { get; set; }
-		// TODO: path to audio file
+		public int Id { get; set; }
 	}
 }
