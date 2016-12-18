@@ -4,6 +4,7 @@
 	//	Can just add more measures and increase tempo to simulate 32nd, 64th, etc..
 	public enum NoteType
 	{
+		Unknown,
 		Whole,
 		Half,
 		Quarter,

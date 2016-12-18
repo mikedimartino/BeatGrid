@@ -11,11 +11,14 @@ namespace BeatGrid
 		public Measure() { }
 		public Measure(TimeSignature timeSignature, NoteType divisionLevel, int rows)
 		{
+			Rows = rows;
 			TimeSignature = timeSignature;
 			DivisionLevel = divisionLevel;
 
 			int columns = timeSignature.NotesPerMeasure *
 					(divisionLevel.GetDenominator() / timeSignature.NoteType.GetDenominator());
+
+			Columns = columns;
 
 			Cells = new Cell[rows, columns];
 			for (int r = 0; r < rows; r++)
@@ -32,9 +35,26 @@ namespace BeatGrid
 			}
 		}
 
+		public Measure(int rows, int columns)
+		{
+			Cells = new Cell[rows, columns];
+			Rows = rows;
+			Columns = columns;
+			TimeSignature = null;
+			DivisionLevel = NoteType.Unknown;
+		}
+
+		public int Rows { get; set; }
+		public int Columns { get; set; }
 		public TimeSignature TimeSignature { get; set; }
 		public NoteType DivisionLevel { get; set; } // Show 32nd, 16th, or 8th notes
 		public Cell[,] Cells { get; set; }
+
+		public Cell this[int row, int column]
+		{
+			get { return Cells[row, column]; }
+			set { Cells[row, column] = value; }
+		}
 
 		public void Clear()
 		{
