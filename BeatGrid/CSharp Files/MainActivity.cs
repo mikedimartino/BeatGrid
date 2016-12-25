@@ -18,7 +18,9 @@ namespace BeatGridAndroid
 	public class MainActivity : Activity
 	{
 		private MainViewModel _mvm;
+		private SoundManager _soundManager;
 
+		#region UI Related
 		private TableLayout _beatGridTable;
 		private TableLayout.LayoutParams _rowParams;
 		private TableRow.LayoutParams _cellParams;
@@ -35,7 +37,8 @@ namespace BeatGridAndroid
 		private Button _playPauseButton;
 		private Button _nextButton;
 
-		private Dictionary<string, Button> _cellButtons; 
+		private Dictionary<string, Button> _cellButtons;
+		#endregion
 
 		protected override void OnCreate(Bundle bundle)
 		{
@@ -48,18 +51,20 @@ namespace BeatGridAndroid
 			_mvm.CellChanged += OnCellChanged;
 			_mvm.MeasureChanged += OnMeasureChanged;
 			_mvm.BeatChanged += OnBeatChanged;
+			_mvm.PlaySoundsList += OnPlaySounds;
 
 			_fontAwesome = Typeface.CreateFromAsset(Assets, "fontawesome-webfont.ttf");
 
 			SetContentView(Resource.Layout.Main);
 			InitLayout();
 
-
 			_cellButtons = new Dictionary<string, Button>();
 
+			_soundManager = new SoundManager(this);
+
+			//InitSoundPool();
 			DrawMeasure(Measure.GetEmptyMeasure());
 
-			InitSoundPool();
 		}
 
 		// Initialize buttons and other layout items
@@ -111,6 +116,7 @@ namespace BeatGridAndroid
 
 			_playPauseButton = FindViewById<Button>(Resource.Id.PlayPauseButton);
 			_playPauseButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_playPauseButton.Click += OnPlayPauseClicked;
 
 			_nextButton = FindViewById<Button>(Resource.Id.NextButton);
 			_nextButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
@@ -121,21 +127,20 @@ namespace BeatGridAndroid
 
 		private void DrawMeasure(Measure measure) //TODO: Change to DrawBeat(Beat beat, int measure)
 		{
-			// Wherever this is called should be async and show a loading screen while this code is run
 			_cellButtons.Clear();
 			_beatGridTable.RemoveAllViews();
 
-			int rows = measure.Cells.GetLength(0);
+			int rows = Constants.MAX_ACTIVE_SOUNDS;
 			int columns = measure.Cells.GetLength(1);
 
 			for (int r = 0; r < rows; r++)
 			{
 				var row = new TableRow(this);
 
-				// Sounds:
-				Sound sound = new Sound($"Sound {r}", -1);
+				Sound sound = _mvm.ActiveBeat.Sounds[r];
+
 				var soundName = new TextView(this);
-				soundName.Text = sound.Name; // Decide on max length
+				soundName.Text = sound.ShortName;
 				soundName.Gravity = GravityFlags.CenterVertical;
 				soundName.SetPadding(10, 0, 0, 0);
 
@@ -188,6 +193,7 @@ namespace BeatGridAndroid
 		private void OnSoundClicked(Sound sound)
 		{
 			//TODO: Implement
+			_soundManager.PlaySound(sound);
 		}
 
 		private void OnSoundLongClicked(Sound sound)
@@ -196,6 +202,11 @@ namespace BeatGridAndroid
 			var transaction = FragmentManager.BeginTransaction();
 			var selectSoundDialog = new SelectSoundDialogFragment();
 			selectSoundDialog.Show(transaction, "select_sound_dialog_fragment");
+		}
+
+		private void OnPlaySounds(object source, PlaySoundsListEventArgs e)
+		{
+			_soundManager.PlaySounds(e.SoundFileNames);
 		}
 
 		#region XClicked
@@ -255,7 +266,8 @@ namespace BeatGridAndroid
 		#region SaveBeat
 		public void OnSaveBeatClicked(object sender, EventArgs e)
 		{
-			TestSoundPool();
+			_mvm.OnSaveClick();
+			//TestSoundPool();
 		}
 		#endregion
 
@@ -268,6 +280,10 @@ namespace BeatGridAndroid
 		}
 		#endregion
 
+		public void OnPlayPauseClicked(object sender, EventArgs e)
+		{
+			_mvm.PlayPauseBeat();
+		}
 
 		#endregion
 

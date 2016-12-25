@@ -18,6 +18,8 @@ namespace BeatGrid
 			int columns = timeSignature.NotesPerMeasure *
 					(divisionLevel.GetDenominator() / timeSignature.NoteType.GetDenominator());
 
+			SubdivisionsPerBeat = DivisionLevel.GetDenominator() / timeSignature.NoteType.GetDenominator();
+
 			Columns = columns;
 
 			Cells = new Cell[rows, columns];
@@ -49,6 +51,7 @@ namespace BeatGrid
 		public TimeSignature TimeSignature { get; set; }
 		public NoteType DivisionLevel { get; set; } // Show 32nd, 16th, or 8th notes
 		public Cell[,] Cells { get; set; }
+		public int SubdivisionsPerBeat { get; set; }
 
 		public Cell this[int row, int column]
 		{
@@ -64,37 +67,14 @@ namespace BeatGrid
 		public static Measure GetEmptyMeasure()
 		{
 			var ts = new TimeSignature(4, NoteType.Quarter);
-			var measure = new Measure(ts, NoteType.Sixteenth, 8);
-			return measure;
-		}
-
-		public static Measure GetTestMeasure()
-		{
-			var ts = new TimeSignature(4, NoteType.Quarter);
-			var measure = new Measure(ts, NoteType.Sixteenth, 8);
-
-			measure.Cells[0, 0].On = true;
-			measure.Cells[0, 2].On = true;
-			measure.Cells[0, 4].On = true;
-			measure.Cells[0, 6].On = true;
-			measure.Cells[0, 8].On = true;
-			measure.Cells[0, 10].On = true;
-			measure.Cells[0, 12].On = true;
-			measure.Cells[0, 14].On = true;
-
-			measure.Cells[1, 4].On = true;
-			measure.Cells[1, 12].On = true;
-
-			measure.Cells[2, 0].On = true;
-			measure.Cells[2, 8].On = true;
-
+			var measure = new Measure(ts, NoteType.Sixteenth, Constants.MAX_ACTIVE_SOUNDS);
 			return measure;
 		}
 
 		public static Measure GetRandomTestMeasure()
 		{
 			var ts = new TimeSignature(4, NoteType.Quarter);
-			var measure = new Measure(ts, NoteType.Sixteenth, 8);
+			var measure = new Measure(ts, NoteType.Sixteenth, Constants.MAX_ACTIVE_SOUNDS);
 			var rand = new Random();
 
 			for (int i = 0; i < measure.Cells.GetLength(0); i++)

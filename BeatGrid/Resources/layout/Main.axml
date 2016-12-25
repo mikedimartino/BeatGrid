@@ -68,13 +68,13 @@
                     android:layout_height="match_parent"
                     android:textSize="32dp"
                     android:text="@string/icon_save" />
-								<Button
+                <Button
                     android:id="@+id/XButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="32dp"
                     android:text="@string/icon_x" />
-                <!--<Button
+            <!--<Button
                     android:id="@+id/TrashButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

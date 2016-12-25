@@ -9,5 +9,6 @@ namespace BeatGrid
 	public class Constants
 	{
 		public const int NEW_BEAT_ID = -1;
+		public const int MAX_ACTIVE_SOUNDS = 10;
 	}
 }

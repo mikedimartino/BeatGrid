@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BeatGrid.ViewModel
@@ -13,12 +12,14 @@ namespace BeatGrid.ViewModel
 		public MainViewModel(SQLiteProvider provider)
 		{
 			_provider = provider;
-			var beat = _provider.GetAllBeats().FirstOrDefault();
-			CurrentMeasure = beat?.Measures.First() ?? Measure.GetEmptyMeasure();
+			//var beat = _provider.GetAllBeats().FirstOrDefault();
+			ActiveBeat = Beat.GetTestBeat();
+			CurrentMeasure = ActiveBeat?.Measures.FirstOrDefault() ?? Measure.GetEmptyMeasure();
 		}
 
 		#region Public Properties
-		public Measure CurrentMeasure { get; set; } // Maybe set raises event?
+		public Beat ActiveBeat { get; set; }
+		public Measure CurrentMeasure { get; set; }
 		#endregion
 
 		#region UI Event Handling
@@ -67,6 +68,54 @@ namespace BeatGrid.ViewModel
 		}
 		#endregion
 
+		#region BeatChanged
+		public delegate void PlaySoundsListEventHandler(object source, PlaySoundsListEventArgs args);
+
+		public event PlaySoundsListEventHandler PlaySoundsList;
+
+		public void OnPlaySoundsList(List<string> soundFileNames)
+		{
+			PlaySoundsList?.Invoke(this, new PlaySoundsListEventArgs() { SoundFileNames = soundFileNames });
+		}
+		#endregion
+
+		public void PlaySound(string soundFileName)
+		{
+			OnPlaySoundsList(new List<string>() { soundFileName });
+		}
+
+		public void PlaySounds(List<string> soundFileNames)
+		{
+			OnPlaySoundsList(soundFileNames);
+		}
+
+		bool isPlaying = false;
+		public void PlayPauseBeat()
+		{
+			//CurrentMeasure
+			if (isPlaying) PauseBeat();
+			else PlayBeat();
+		}
+
+		public async void PlayBeat()
+		{
+			isPlaying = true;
+			// Test:
+			var testSounds = new List<string> { SoundFileNames.bell1, SoundFileNames.snare01, SoundFileNames.bd0000 };
+			int intervalBetweenBeatsMs = 4000;
+			int playbackIntervalMs = intervalBetweenBeatsMs / CurrentMeasure.SubdivisionsPerBeat;
+			while(isPlaying)
+			{
+				PlaySounds(testSounds);
+				await Task.Delay(playbackIntervalMs);
+			}
+			
+		}
+
+		public void PauseBeat()
+		{
+			isPlaying = false;
+		}
 
 		public void ToggleCell(Cell cell)
 		{
@@ -93,6 +142,9 @@ namespace BeatGrid.ViewModel
 		public void OnSaveClick()
 		{
 			//TODO: Implement
+			//TEMP:
+			var sounds = new List<string>() { "snare01.ogg", "crash1.ogg" };
+			PlaySounds(sounds);
 		}
 
 		public void OpenBeat(int beatId)

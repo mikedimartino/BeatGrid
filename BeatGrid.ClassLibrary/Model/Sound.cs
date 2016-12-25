@@ -8,14 +8,21 @@ namespace BeatGrid
 {
 	public class Sound
 	{
-		public Sound() { }
-		public Sound(string name, int id)
+		public Sound()
 		{
-			Name = name;
-			Id = id;
+			FileName = string.Empty;
+			LongName = "(empty)";
+			ShortName = "(empty)";
+		}
+		public Sound(string fileName, string longName, string shortName)
+		{
+			FileName = fileName;
+			LongName = longName;
+			ShortName = shortName;
 		}
 
-		public string Name { get; set; }
-		public int Id { get; set; }
+		public string FileName { get; set; }
+		public string LongName { get; set; }
+		public string ShortName { get; set; }
 	}
 }

@@ -8,9 +8,6 @@ namespace BeatGrid
 {
 	public class Beat
 	{
-		private const int DEFAULT_ROWS_COUNT = 4;
-		private const int DEFAULT_COLUMNS_COUNT = 16;
-
 		public Beat() { }
 		public Beat(string name) { throw new NotImplementedException(); }
 		public Beat(List<Measure> measures)
@@ -20,6 +17,14 @@ namespace BeatGrid
 			Measures = measures;
 			CurrentMeasureIndex = 0;
 			Sounds = new List<Sound>();
+		}
+		public Beat(List<Sound> sounds, List<Measure> measures)
+		{
+			Id = Constants.NEW_BEAT_ID;
+			Name = "_UNNAMED";
+			Measures = measures;
+			CurrentMeasureIndex = 0;
+			Sounds = sounds;
 		}
 		public Beat(List<Sound> sounds, int columnsPerMeasure, int numMeasures)
 		{
@@ -33,7 +38,7 @@ namespace BeatGrid
 			{
 				Measures.Add(new Measure(sounds.Count, columnsPerMeasure));
 			}
-
+			Sounds = sounds;
 		}
 
 		public string Name { get; set; }
@@ -44,6 +49,7 @@ namespace BeatGrid
 		public TimeSignature TimeSignature { get; set; }
 		public NoteType DivisionLevel { get; set; } // Show 32nd, 16th, or 8th notes
 		public List<Measure> Measures { get; set; }
+		public int SubdivisionsPerBeat { get; set; } // Beat as in BPM
 
 		public List<Sound> Sounds { get; set; }
 
@@ -70,41 +76,19 @@ namespace BeatGrid
 			{
 				measures.Add(Measure.GetRandomTestMeasure());
 			}
-
-			Beat beat = new Beat(measures);
+			var sounds = SoundHelper.GetDefaultSounds();
+			Beat beat = new Beat(sounds, measures);
 			return beat;
 		}
 
 		public static Measure GetEmptyMeasure()
 		{
-			return new Measure(8, 16);
-		}
-
-		public static Measure GetTestMeasure()
-		{
-			var measure = new Measure(8, 16);
-
-			measure[0, 0].On = true;
-			measure[0, 2].On = true;
-			measure[0, 4].On = true;
-			measure[0, 6].On = true;
-			measure[0, 8].On = true;
-			measure[0, 10].On = true;
-			measure[0, 12].On = true;
-			measure[0, 14].On = true;
-
-			measure[1, 4].On = true;
-			measure[1, 12].On = true;
-
-			measure[2, 0].On = true;
-			measure[2, 8].On = true;
-
-			return measure;
+			return new Measure(Constants.MAX_ACTIVE_SOUNDS, 16);
 		}
 
 		public static Measure GetRandomTestMeasure()
 		{
-			var measure = new Measure(8, 16);
+			var measure = new Measure(Constants.MAX_ACTIVE_SOUNDS, 16);
 			var rand = new Random();
 
 			for (int i = 0; i < measure.Cells.GetLength(0); i++)

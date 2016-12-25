@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BeatGrid.ViewModel
 {
@@ -46,6 +47,14 @@ namespace BeatGrid.ViewModel
 		public OpenBeatEventArgs(int beatId) { Id = beatId; }
 
 		public int Id { get; set; }
+	}
+
+	public class PlaySoundsListEventArgs : EventArgs
+	{
+		public PlaySoundsListEventArgs() { }
+		public PlaySoundsListEventArgs(List<string> soundFileNames) { SoundFileNames = soundFileNames; }
+
+		public List<string> SoundFileNames { get; set; }
 	}
 
 	public delegate void ClearMeasureSelectedEventHandler(object source, EventArgs args);

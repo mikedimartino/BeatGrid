@@ -70,6 +70,7 @@
     <Compile Include="CSharp Files\ExpandableListAdapter.cs" />
     <Compile Include="CSharp Files\OpenBeatFragment.cs" />
     <Compile Include="CSharp Files\SelectSoundDialogFragment.cs" />
+    <Compile Include="CSharp Files\SoundManager.cs" />
     <Compile Include="CSharp Files\XDialogFragment.cs" />
     <Compile Include="CSharp Files\MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
