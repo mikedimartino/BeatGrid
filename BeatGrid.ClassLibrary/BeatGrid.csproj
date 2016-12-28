@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Helpers\SoundHelper.cs" />
+    <Compile Include="Helpers\Util.cs" />
     <Compile Include="Model\Beat.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Model\Sound.cs" />

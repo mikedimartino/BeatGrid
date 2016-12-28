@@ -3,13 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
-	<ListView
-			android:id="@+id/XOptionList"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
-
-	<!--<Button
+    <ListView
+        android:id="@+id/XOptionList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+<!--<Button
         android:id="@+id/clear_measure_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +38,7 @@
         android:paddingRight="140dp"
         android:text="Delete Beat" />
 -->
-	<!--<Button
+<!--<Button
         android:id="@+id/cancel_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

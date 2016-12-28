@@ -105,7 +105,7 @@ namespace BeatGrid
 			//Sound(string fileName, string longName, string shortName)
 			sounds.Add(new Sound("clhat01.ogg", "Closed Hi-hat 1", "CHH2"));
 			sounds.Add(new Sound("ophat01.ogg", "Open Hi-hat 1", "OHH1"));
-			sounds.Add(new Sound("snare01.ogg", "Snare Drum 2", "SD2"));
+			sounds.Add(new Sound(SoundFileNames.snare04, "Snare Drum 4", "SD4"));
 			sounds.Add(new Sound("bd0000.mp3", "Kick 1", "KICK1"));
 			sounds.Add(new Sound("ride1.ogg", "Ride 1", "RIDE1"));
 			sounds.Add(new Sound("crash1.ogg", "Crash 1", "CR1"));

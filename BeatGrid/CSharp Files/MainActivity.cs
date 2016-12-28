@@ -14,7 +14,7 @@ using Android.Media;
 
 namespace BeatGridAndroid
 {
-	[Activity(Label = "BeatGrid", MainLauncher = true, Icon = "@drawable/BeatGridLogo")]
+	[Activity(Label = "BeatGrid", MainLauncher = true, Icon = "@drawable/BeatGridLogo", ScreenOrientation = Android.Content.PM.ScreenOrientation.UserLandscape)]
 	public class MainActivity : Activity
 	{
 		private MainViewModel _mvm;
@@ -137,7 +137,7 @@ namespace BeatGridAndroid
 			{
 				var row = new TableRow(this);
 
-				Sound sound = _mvm.ActiveBeat.Sounds[r];
+				Sound sound = _mvm.CurrentBeat.Sounds[r];
 
 				var soundName = new TextView(this);
 				soundName.Text = sound.ShortName;
@@ -275,7 +275,7 @@ namespace BeatGridAndroid
 		public void OnSettingsClicked(object sender, EventArgs e)
 		{
 			var transaction = FragmentManager.BeginTransaction();
-			var beatSettingsDialog = new BeatSettingsDialogFragment();
+			var beatSettingsDialog = new BeatSettingsDialogFragment(_mvm);
 			beatSettingsDialog.Show(transaction, "beat_settings_dialog_fragment");
 		}
 		#endregion
@@ -283,6 +283,14 @@ namespace BeatGridAndroid
 		public void OnPlayPauseClicked(object sender, EventArgs e)
 		{
 			_mvm.PlayPauseBeat();
+			if (_mvm.IsPlaying)
+			{
+				_playPauseButton.Text = Resources.GetString(Resource.String.icon_pause);
+			}
+			else
+			{
+				_playPauseButton.Text = Resources.GetString(Resource.String.icon_play);
+			}
 		}
 
 		#endregion

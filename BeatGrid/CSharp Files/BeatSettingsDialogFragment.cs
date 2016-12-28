@@ -13,7 +13,14 @@ namespace BeatGridAndroid
 {
 	public class BeatSettingsDialogFragment : DialogFragment
 	{
-		public event BeatSelectedEventHandler BeatSelected;
+		MainViewModel _mvm;
+		SeekBar _tempoSeekBar;
+		TextView _tempoValueTextView;
+
+		public BeatSettingsDialogFragment(MainViewModel mvm)
+		{
+			_mvm = mvm;
+		}
 
 		public override Dialog OnCreateDialog(Bundle savedInstanceState)
 		{
@@ -25,7 +32,22 @@ namespace BeatGridAndroid
 			Dialog.SetTitle("Beat Settings:");
 
 			var view = inflater.Inflate(Resource.Layout.BeatSettingsDialog, container, false);
+
+			_tempoSeekBar = view.FindViewById<SeekBar>(Resource.Id.BeatSettingsTempoSeekBar);
+			_tempoSeekBar.Max = Constants.MAX_TEMPO;
+			_tempoSeekBar.Progress = 100;
+			_tempoSeekBar.ProgressChanged += _tempoSeekBar_ProgressChanged;
+
+			_tempoValueTextView = view.FindViewById<TextView>(Resource.Id.BeatSettingsTempoValueTextView);
+			_tempoValueTextView.Text = _tempoSeekBar.Progress.ToString();
+
 			return view;
+		}
+
+		private void _tempoSeekBar_ProgressChanged(object sender, SeekBar.ProgressChangedEventArgs e)
+		{
+			_mvm.CurrentBeat.Tempo = e.Progress;
+			_tempoValueTextView.Text = e.Progress.ToString();
 		}
 
 		public override void OnActivityCreated(Bundle savedInstanceState)

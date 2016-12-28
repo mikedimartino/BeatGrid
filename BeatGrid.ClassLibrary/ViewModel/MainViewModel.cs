@@ -12,14 +12,15 @@ namespace BeatGrid.ViewModel
 		public MainViewModel(SQLiteProvider provider)
 		{
 			_provider = provider;
-			//var beat = _provider.GetAllBeats().FirstOrDefault();
-			ActiveBeat = Beat.GetTestBeat();
-			CurrentMeasure = ActiveBeat?.Measures.FirstOrDefault() ?? Measure.GetEmptyMeasure();
+			CurrentBeat = Beat.GetEmptyBeat();
+			CurrentMeasure = CurrentBeat.Measures.FirstOrDefault();
+			IsPlaying = false;
 		}
 
 		#region Public Properties
-		public Beat ActiveBeat { get; set; }
+		public Beat CurrentBeat { get; set; }
 		public Measure CurrentMeasure { get; set; }
+		public bool IsPlaying { get; set; }
 		#endregion
 
 		#region UI Event Handling
@@ -89,37 +90,52 @@ namespace BeatGrid.ViewModel
 			OnPlaySoundsList(soundFileNames);
 		}
 
-		bool isPlaying = false;
 		public void PlayPauseBeat()
 		{
 			//CurrentMeasure
-			if (isPlaying) PauseBeat();
+			if (IsPlaying) PauseBeat();
 			else PlayBeat();
 		}
 
+		public int PlaybackTempo { get; set; }
+
+		int playbackPosition = 0;
 		public async void PlayBeat()
 		{
-			isPlaying = true;
+			IsPlaying = true;
+
 			// Test:
-			var testSounds = new List<string> { SoundFileNames.bell1, SoundFileNames.snare01, SoundFileNames.bd0000 };
-			int intervalBetweenBeatsMs = 4000;
-			int playbackIntervalMs = intervalBetweenBeatsMs / CurrentMeasure.SubdivisionsPerBeat;
-			while(isPlaying)
+
+			//int playbackTempo = CurrentBeat.Tempo;
+
+			//double intervalBetweenBeatsMs = (1.0 / playbackTempo) * 60 * 1000;
+			////int intervalBetweenBeatsMs = 1000;
+			//double playbackIntervalMs = intervalBetweenBeatsMs / CurrentMeasure.SubdivisionsPerBeat;
+			while(IsPlaying)
 			{
-				PlaySounds(testSounds);
-				await Task.Delay(playbackIntervalMs);
+				var soundsToPlay = new List<string>();
+				for (int i = 0; i < CurrentMeasure.Rows; i++)
+				{
+					if (CurrentMeasure.Cells[i, playbackPosition].On)
+					{
+						soundsToPlay.Add(CurrentBeat.Sounds[i].FileName);
+					}
+				}
+				PlaySounds(soundsToPlay);
+				await Task.Delay(CurrentBeat.PlaybackIntervalMs);
+				playbackPosition = (playbackPosition + 1) % CurrentMeasure.Columns;
 			}
-			
 		}
 
 		public void PauseBeat()
 		{
-			isPlaying = false;
+			IsPlaying = false;
 		}
 
 		public void ToggleCell(Cell cell)
 		{
 			cell.On = !cell.On;
+			CurrentMeasure.Cells[cell.Row, cell.Column].On = cell.On;
 			OnCellChanged(cell);
 		}
 
