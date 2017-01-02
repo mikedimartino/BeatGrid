@@ -168,7 +168,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\button_off.xml">
+    <AndroidResource Include="Resources\drawable\button_off2.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -187,7 +187,11 @@
       <Name>BeatGrid</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_off1.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\raw\bd0000.mp3" />
   </ItemGroup>

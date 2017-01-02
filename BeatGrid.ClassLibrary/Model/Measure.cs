@@ -64,6 +64,12 @@ namespace BeatGrid
 			foreach (Cell cell in Cells) cell.On = false;
 		}
 
+		// Alternate color every beat for readability.
+		public bool CellShouldUseAlternateOffColor(Cell cell)
+		{
+			return cell.Column % (2 * SubdivisionsPerBeat) >= SubdivisionsPerBeat;
+		}
+
 		public static Measure GetEmptyMeasure()
 		{
 			var ts = new TimeSignature(4, NoteType.Quarter);

@@ -38,6 +38,8 @@ namespace BeatGridAndroid
 		private Button _nextButton;
 
 		private Dictionary<string, Button> _cellButtons;
+		// key = cell coordinate, value = off color res id (since color will alternate per beat)
+		private Dictionary<string, int> _cellOffColorResIds;
 		#endregion
 
 		protected override void OnCreate(Bundle bundle)
@@ -59,6 +61,7 @@ namespace BeatGridAndroid
 			InitLayout();
 
 			_cellButtons = new Dictionary<string, Button>();
+			_cellOffColorResIds = new Dictionary<string, int>();
 
 			_soundManager = new SoundManager(this);
 
@@ -128,6 +131,7 @@ namespace BeatGridAndroid
 		private void DrawMeasure(Measure measure) //TODO: Change to DrawBeat(Beat beat, int measure)
 		{
 			_cellButtons.Clear();
+			_cellOffColorResIds.Clear();
 			_beatGridTable.RemoveAllViews();
 
 			int rows = Constants.MAX_ACTIVE_SOUNDS;
@@ -159,6 +163,10 @@ namespace BeatGridAndroid
 
 					
 					_cellButtons.Add(cell.GetCoordinate(), button);
+
+					int offColorResId = _mvm.CurrentMeasure.CellShouldUseAlternateOffColor(cell) ?
+						Resource.Drawable.button_off2 : Resource.Drawable.button_off1;
+					_cellOffColorResIds.Add(cell.GetCoordinate(), offColorResId);
 
 					row.AddView(button, _cellParams);
 
@@ -298,7 +306,8 @@ namespace BeatGridAndroid
 		// Assumes that the cell coordinate will map to an existing position in the measure
 		private void DrawCell(Cell cell)
 		{
-			int backgroundResId = cell.On ? Resource.Drawable.button_on : Resource.Drawable.button_off;
+			int backgroundResId = cell.On ? Resource.Drawable.button_on 
+				: _cellOffColorResIds[cell.GetCoordinate()];
 			Button button = _cellButtons[cell.GetCoordinate()];
 			button.SetBackgroundResource(backgroundResId);
 		}
