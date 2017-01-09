@@ -10,27 +10,54 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Graphics;
+using BeatGrid;
 
 namespace BeatGridAndroid
 {
 	// From http://www.appliedcodelog.com/2016/06/expandablelistview-in-xamarin-android.html
-	public class ExpandableListAdapter : BaseExpandableListAdapter
+	public class SelectSoundExpandableListAdapter : BaseExpandableListAdapter
 	{
 		private Activity _context;
 		private List<string> _listDataHeader; // header titles
 																					// child data in format of header title, child title
 		private Dictionary<string, List<string>> _listDataChild;
+		private Dictionary<string, Sound> _groupChildPosToSound; // Key = "groupPosition,childPosition"; Value = Sound
+		private SoundManager _soundManager;
+		private HashSet<string> _initializedChildViews; // Use this to make sure we don't subscribe to Click events multiple times in GetChildView()
 
 		private Typeface _fontAwesome;
 
-		public ExpandableListAdapter(Activity context, List<string> listDataHeader, Dictionary<String, List<string>> listChildData)
+		public SelectSoundExpandableListAdapter(Activity context, SoundManager soundManager)
 		{
 			_context = context;
-			_listDataHeader = listDataHeader;
-			_listDataChild = listChildData;
+			_fontAwesome = ((MainActivity)context).FontAwesome;
 
-			_fontAwesome = Typeface.CreateFromAsset(context.Assets, "fontawesome-webfont.ttf");
+			_listDataHeader = new List<string>();
+			_listDataChild = new Dictionary<string, List<string>>();
+			_groupChildPosToSound = new Dictionary<string, Sound>();
+			_initializedChildViews = new HashSet<string>();
+
+			_soundManager = soundManager;
+
+			var soundsGroupedByCategory = soundManager.AllSounds.GroupBy(s => s.Category);
+			int groupIndex = 0;
+			foreach (var group in soundsGroupedByCategory)
+			{
+				_listDataHeader.Add(group.Key);
+				_listDataChild.Add(group.Key, new List<string>());
+
+				int childIndex = 0;
+				foreach(var sound in group)
+				{
+					_listDataChild[group.Key].Add(sound.LongName);
+					_groupChildPosToSound.Add(GetGroupChildPosKey(groupIndex, childIndex), sound);
+					childIndex++;
+				}
+				//_listDataChild.Add(group.Key, group.Select(g => g.LongName).ToList());
+				groupIndex++;
+			}
 		}
+
 		//for child item view
 		public override Java.Lang.Object GetChild(int groupPosition, int childPosition)
 		{
@@ -43,18 +70,22 @@ namespace BeatGridAndroid
 
 		public override View GetChildView(int groupPosition, int childPosition, bool isLastChild, View convertView, ViewGroup parent)
 		{
-			string childText = (string)GetChild(groupPosition, childPosition);
-			convertView = convertView ?? _context.LayoutInflater.Inflate(Resource.Layout.ExpandableListViewItem, null);
+			convertView = convertView ?? _context.LayoutInflater.Inflate(Resource.Layout.SelectSoundExpandableListViewItem, null);
 
+			string childText = (string)GetChild(groupPosition, childPosition);
 			TextView txtListChild = (TextView)convertView.FindViewById(Resource.Id.SelectSoundItemTextView);
 			txtListChild.Text = childText;
 
+			Sound sound = _groupChildPosToSound[GetGroupChildPosKey(groupPosition, childPosition)];
+
 			Button playButton = (Button)convertView.FindViewById(Resource.Id.PlaySoundButton);
 			playButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			//playButton.SetOnClickListener(null);
 			playButton.Click += delegate (object sender, EventArgs e)
 			{
 				//TODO: Play sound.
 				//TODO: Create sound event args, event, and delegate.
+				_soundManager.PlaySound(sound);
 			};
 
 
@@ -65,6 +96,7 @@ namespace BeatGridAndroid
 				//TODO: Select sound.
 				//TODO: Create sound event args, event, and delegate.
 			};
+
 
 			return convertView;
 		}
@@ -92,7 +124,7 @@ namespace BeatGridAndroid
 		{
 			string headerTitle = (string)GetGroup(groupPosition);
 
-			convertView = convertView ?? _context.LayoutInflater.Inflate(Resource.Layout.ExpandableListViewHeader, null);
+			convertView = convertView ?? _context.LayoutInflater.Inflate(Resource.Layout.SelectSoundExpandableListViewHeader, null);
 			var expListViewHeader = (TextView)convertView.FindViewById(Resource.Id.ExpListViewHeader);
 			expListViewHeader.Text = headerTitle;
 
@@ -112,6 +144,11 @@ namespace BeatGridAndroid
 
 		class ViewHolderItem : Java.Lang.Object
 		{
+		}
+
+		private string GetGroupChildPosKey(int groupPosition, int childPosition)
+		{
+			return $"{groupPosition},{childPosition}";
 		}
 	}
 }

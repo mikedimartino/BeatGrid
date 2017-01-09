@@ -76,7 +76,7 @@ namespace BeatGridAndroid
 			}
 		}
 
-		public static List<Sound> AllSounds { get;set; }
+		public List<Sound> AllSounds { get;set; }
 
 		private SoundPool _soundPool;
 

@@ -510,6 +510,12 @@ namespace BeatGridAndroid
 			// aapt resource value: 0x7f020005
 			public const int red_button = 2130837509;
 			
+			// aapt resource value: 0x7f020006
+			public const int sound_border = 2130837510;
+			
+			// aapt resource value: 0x7f020007
+			public const int sound_category_border = 2130837511;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -523,11 +529,11 @@ namespace BeatGridAndroid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f080014
-			public const int BeatGrid = 2131230740;
+			// aapt resource value: 0x7f080010
+			public const int BeatGrid = 2131230736;
 			
-			// aapt resource value: 0x7f080015
-			public const int BeatList = 2131230741;
+			// aapt resource value: 0x7f080011
+			public const int BeatList = 2131230737;
 			
 			// aapt resource value: 0x7f080004
 			public const int BeatSettingsMeasuresTextView = 2131230724;
@@ -556,44 +562,44 @@ namespace BeatGridAndroid
 			// aapt resource value: 0x7f080003
 			public const int BeatSettingsTimeSignatureValueTextView = 2131230723;
 			
-			// aapt resource value: 0x7f080009
-			public const int ExpListViewHeader = 2131230729;
-			
-			// aapt resource value: 0x7f080013
-			public const int NextButton = 2131230739;
-			
-			// aapt resource value: 0x7f080016
-			public const int OpenBeatTextViewItem = 2131230742;
-			
-			// aapt resource value: 0x7f08000d
-			public const int OpenButton = 2131230733;
-			
-			// aapt resource value: 0x7f080012
-			public const int PlayPauseButton = 2131230738;
-			
-			// aapt resource value: 0x7f08000c
-			public const int PlaySoundButton = 2131230732;
-			
-			// aapt resource value: 0x7f080011
-			public const int PreviousButton = 2131230737;
-			
-			// aapt resource value: 0x7f08000e
-			public const int SaveButton = 2131230734;
-			
-			// aapt resource value: 0x7f08000b
-			public const int SelectSoundButton = 2131230731;
-			
-			// aapt resource value: 0x7f080017
-			public const int SelectSoundExpListView = 2131230743;
-			
-			// aapt resource value: 0x7f08000a
-			public const int SelectSoundItemTextView = 2131230730;
-			
-			// aapt resource value: 0x7f080010
-			public const int SettingsButton = 2131230736;
+			// aapt resource value: 0x7f080014
+			public const int ExpListViewHeader = 2131230740;
 			
 			// aapt resource value: 0x7f08000f
-			public const int XButton = 2131230735;
+			public const int NextButton = 2131230735;
+			
+			// aapt resource value: 0x7f080012
+			public const int OpenBeatTextViewItem = 2131230738;
+			
+			// aapt resource value: 0x7f080009
+			public const int OpenButton = 2131230729;
+			
+			// aapt resource value: 0x7f08000e
+			public const int PlayPauseButton = 2131230734;
+			
+			// aapt resource value: 0x7f080017
+			public const int PlaySoundButton = 2131230743;
+			
+			// aapt resource value: 0x7f08000d
+			public const int PreviousButton = 2131230733;
+			
+			// aapt resource value: 0x7f08000a
+			public const int SaveButton = 2131230730;
+			
+			// aapt resource value: 0x7f080016
+			public const int SelectSoundButton = 2131230742;
+			
+			// aapt resource value: 0x7f080013
+			public const int SelectSoundExpListView = 2131230739;
+			
+			// aapt resource value: 0x7f080015
+			public const int SelectSoundItemTextView = 2131230741;
+			
+			// aapt resource value: 0x7f08000c
+			public const int SettingsButton = 2131230732;
+			
+			// aapt resource value: 0x7f08000b
+			public const int XButton = 2131230731;
 			
 			// aapt resource value: 0x7f080018
 			public const int XOptionList = 2131230744;
@@ -615,22 +621,22 @@ namespace BeatGridAndroid
 			public const int BeatSettingsDialog = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int ExpandableListViewHeader = 2130903041;
+			public const int Main = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int ExpandableListViewItem = 2130903042;
+			public const int OpenBeatDialog = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Main = 2130903043;
+			public const int OpenBeatTextViewItem = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int OpenBeatDialog = 2130903044;
+			public const int SelectSoundDialog = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int OpenBeatTextViewItem = 2130903045;
+			public const int SelectSoundExpandableListViewHeader = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int SelectSoundDialog = 2130903046;
+			public const int SelectSoundExpandableListViewItem = 2130903046;
 			
 			// aapt resource value: 0x7f030007
 			public const int XDialog = 2130903047;
@@ -786,6 +792,12 @@ namespace BeatGridAndroid
 			
 			// aapt resource value: 0x7f060002
 			public const int Test1 = 2131099650;
+			
+			// aapt resource value: 0x7f060013
+			public const int angle_down = 2131099667;
+			
+			// aapt resource value: 0x7f060012
+			public const int angle_up = 2131099666;
 			
 			// aapt resource value: 0x7f060011
 			public const int icon_check = 2131099665;

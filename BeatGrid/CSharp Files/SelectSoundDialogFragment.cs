@@ -9,17 +9,23 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using BeatGrid;
 
 namespace BeatGridAndroid
 {
 	// Some of this code taken from http://www.appliedcodelog.com/2016/06/expandablelistview-in-xamarin-android.html
 	public class SelectSoundDialogFragment : DialogFragment
 	{
-		ExpandableListAdapter _listAdapter;
+		SoundManager _soundManager;
+		SelectSoundExpandableListAdapter _listAdapter;
 		ExpandableListView _expListView;
 		List<string> _listDataHeader;
 		Dictionary<string, List<string>> _listDataChild;
-		int _previousGroup = -1;
+
+		public SelectSoundDialogFragment(SoundManager soundManager)
+		{
+			_soundManager = soundManager;
+		}
 
 		public override Dialog OnCreateDialog(Bundle savedInstanceState)
 		{
@@ -33,9 +39,11 @@ namespace BeatGridAndroid
 			var view = inflater.Inflate(Resource.Layout.SelectSoundDialog, container, false);
 			_expListView = (ExpandableListView)view.FindViewById(Resource.Id.SelectSoundExpListView);
 
-			GetTestData();
+			//GetTestData();
+			//GetAllSoundData();
 
-			_listAdapter = new ExpandableListAdapter(Activity, _listDataHeader, _listDataChild);
+			//_listAdapter = new SelectSoundExpandableListAdapter(Activity, _listDataHeader, _listDataChild);
+			_listAdapter = new SelectSoundExpandableListAdapter(Activity, _soundManager);
 			_expListView.SetAdapter(_listAdapter);
 
 			return view;
@@ -66,16 +74,7 @@ namespace BeatGridAndroid
 			#endregion
 
 			#endregion
-
-			//_beatNamesList.ItemClick += (sender, args) =>
-			//{
-			//	string beatName = (string)_beatNamesList.GetItemAtPosition(args.Position);
-			//	BeatSelected?.Invoke(this, new OpenBeatEventArgs() { Id = BeatNameIds[beatName] });
-			//	Dismiss();
-			//};
 		}
-
-
 
 		private void GetTestData()
 		{
@@ -99,6 +98,19 @@ namespace BeatGridAndroid
 			_listDataChild.Add(rideCymbal, rideCymbalList);
 			_listDataChild.Add(snare, snareList);
 			_listDataChild.Add(kick, kickList);
+		}
+
+		private void GetAllSoundData()
+		{
+			_listDataHeader = new List<string>();
+			_listDataChild = new Dictionary<string, List<string>>();
+
+			var soundsGroupedByCategory = _soundManager.AllSounds.GroupBy(s => s.Category);
+			foreach(var group in soundsGroupedByCategory)
+			{
+				_listDataHeader.Add(group.Key);
+				_listDataChild.Add(group.Key, group.Select(g => g.LongName).ToList());
+			}
 		}
 	}
 }

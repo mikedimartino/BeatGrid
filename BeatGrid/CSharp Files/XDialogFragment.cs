@@ -31,29 +31,6 @@ namespace BeatGridAndroid
 			var view = inflater.Inflate(Resource.Layout.XDialog, container, false);
 			_optionsList = (ListView)view.FindViewById(Resource.Id.XOptionList);
 
-			#region Using Buttons
-			//var clearMeasureButton = view.FindViewById<Button>(Resource.Id.clear_measure_button);
-			//clearMeasureButton.Click += delegate
-			//{
-			//	XOptionSelected?.Invoke(this, new XOptionEventArgs() { Option = XOption.ClearMeasure });
-			//	Dismiss();
-			//};
-
-			//var deleteMeasureButton = view.FindViewById<Button>(Resource.Id.delete_measure_button);
-			//deleteMeasureButton.Click += delegate
-			//{
-			//	XOptionSelected?.Invoke(this, new XOptionEventArgs() { Option = XOption.DeleteMeasure });
-			//	Dismiss();
-			//};
-
-			//var deleteBeatButton = view.FindViewById<Button>(Resource.Id.delete_beat_button);
-			//deleteBeatButton.Click += delegate
-			//{
-			//	XOptionSelected?.Invoke(this, new XOptionEventArgs() { Option = XOption.DeleteBeat });
-			//	Dismiss();
-			//};
-			#endregion
-
 			return view;
 		}
 

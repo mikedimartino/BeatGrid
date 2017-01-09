@@ -26,8 +26,6 @@ namespace BeatGridAndroid
 		private TableRow.LayoutParams _cellParams;
 		private TableRow.LayoutParams _soundNameParams;
 
-		private Typeface _fontAwesome;
-		
 		private Button _openButton; 
 		private Button _saveButton;
 		private Button _xButton;
@@ -42,11 +40,17 @@ namespace BeatGridAndroid
 		private Dictionary<string, int> _cellOffColorResIds;
 		#endregion
 
+		#region Global properties
+		public Typeface FontAwesome { get; set; }
+		#endregion
+
 		protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
 
 			Window.RequestFeature(WindowFeatures.NoTitle);
+
+			FontAwesome = Typeface.CreateFromAsset(Assets, "fontawesome-webfont.ttf");
 
 			_mvm = new MainViewModel(GetSQLiteProvider());
 
@@ -54,8 +58,6 @@ namespace BeatGridAndroid
 			_mvm.MeasureChanged += OnMeasureChanged;
 			_mvm.BeatChanged += OnBeatChanged;
 			_mvm.PlaySoundsList += OnPlaySounds;
-
-			_fontAwesome = Typeface.CreateFromAsset(Assets, "fontawesome-webfont.ttf");
 
 			SetContentView(Resource.Layout.Main);
 			InitLayout();
@@ -99,30 +101,30 @@ namespace BeatGridAndroid
 			#region Top Bar Buttons
 			// Maybe just call MVM directly instead of these events?
 			_saveButton = FindViewById<Button>(Resource.Id.SaveButton);
-			_saveButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_saveButton.SetTypeface(FontAwesome, TypefaceStyle.Normal);
 			_saveButton.Click += OnSaveBeatClicked;
 
 			_settingsButton = FindViewById<Button>(Resource.Id.SettingsButton);
-			_settingsButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_settingsButton.SetTypeface(FontAwesome, TypefaceStyle.Normal);
 			_settingsButton.Click += OnSettingsClicked;
 
 			_openButton = FindViewById<Button>(Resource.Id.OpenButton);
-			_openButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_openButton.SetTypeface(FontAwesome, TypefaceStyle.Normal);
 			_openButton.Click += OnOpenBeatClicked;
 
 			_xButton = FindViewById<Button>(Resource.Id.XButton);
-			_xButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_xButton.SetTypeface(FontAwesome, TypefaceStyle.Normal);
 			_xButton.Click += OnXClicked;
 
 			_previousButton = FindViewById<Button>(Resource.Id.PreviousButton);
-			_previousButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_previousButton.SetTypeface(FontAwesome, TypefaceStyle.Normal);
 
 			_playPauseButton = FindViewById<Button>(Resource.Id.PlayPauseButton);
-			_playPauseButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_playPauseButton.SetTypeface(FontAwesome, TypefaceStyle.Normal);
 			_playPauseButton.Click += OnPlayPauseClicked;
 
 			_nextButton = FindViewById<Button>(Resource.Id.NextButton);
-			_nextButton.SetTypeface(_fontAwesome, TypefaceStyle.Normal);
+			_nextButton.SetTypeface(FontAwesome, TypefaceStyle.Normal);
 
 			#endregion
 
@@ -208,7 +210,7 @@ namespace BeatGridAndroid
 		{
 			//TODO: Implement
 			var transaction = FragmentManager.BeginTransaction();
-			var selectSoundDialog = new SelectSoundDialogFragment();
+			var selectSoundDialog = new SelectSoundDialogFragment(_soundManager);
 			selectSoundDialog.Show(transaction, "select_sound_dialog_fragment");
 		}
 
@@ -274,8 +276,13 @@ namespace BeatGridAndroid
 		#region SaveBeat
 		public void OnSaveBeatClicked(object sender, EventArgs e)
 		{
-			_mvm.OnSaveClick();
+			//_mvm.OnSaveClick();
 			//TestSoundPool();
+
+			//temp:
+			var transaction = FragmentManager.BeginTransaction();
+			var soundLibraryDialog = new SoundLibraryDialogFragment(_mvm, _soundManager);
+			soundLibraryDialog.Show(transaction, "sound_library_dialog_fragment");
 		}
 		#endregion
 

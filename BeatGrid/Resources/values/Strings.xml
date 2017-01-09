@@ -20,4 +20,7 @@
 	<string name ="icon_open">&#xf115;</string>
 	<string name ="icon_x">&#xf00d;</string>
 	<string name ="icon_check">&#xf00c;</string>
+	<string name ="angle_up">&#xf106;</string>
+	<string name ="angle_down">&#xf107;</string>
+	
 </resources>
