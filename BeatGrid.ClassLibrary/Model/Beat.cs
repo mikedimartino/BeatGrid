@@ -18,28 +18,6 @@ namespace BeatGrid
 			Sounds = sounds;
 			Tempo = Constants.DEFAULT_TEMPO;
 		}
-		//public Beat(List<Measure> measures)
-		//{
-		//	Id = Constants.NEW_BEAT_ID;
-		//	Name = "_UNNAMED";
-		//	Measures = measures;
-		//	CurrentMeasureIndex = 0;
-		//	Sounds = new List<Sound>();
-		//}
-		//public Beat(List<Sound> sounds, int columnsPerMeasure, int numMeasures)
-		//{
-		//	Id = Constants.NEW_BEAT_ID;
-		//	Name = "_UNNAMED";
-		//	TimeSignature = null;
-		//	DivisionLevel = NoteType.Unknown;
-		//	CurrentMeasureIndex = 0;
-		//	Measures = new List<Measure>();
-		//	for(int i = 0; i < numMeasures; i++)
-		//	{
-		//		Measures.Add(new Measure(sounds.Count, columnsPerMeasure));
-		//	}
-		//	Sounds = sounds;
-		//}
 
 		public string Name { get; set; }
 		public int Id { get; set; }

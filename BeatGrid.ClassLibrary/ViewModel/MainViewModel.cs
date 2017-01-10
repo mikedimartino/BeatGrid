@@ -103,14 +103,6 @@ namespace BeatGrid.ViewModel
 		public async void PlayBeat()
 		{
 			IsPlaying = true;
-
-			// Test:
-
-			//int playbackTempo = CurrentBeat.Tempo;
-
-			//double intervalBetweenBeatsMs = (1.0 / playbackTempo) * 60 * 1000;
-			////int intervalBetweenBeatsMs = 1000;
-			//double playbackIntervalMs = intervalBetweenBeatsMs / CurrentMeasure.SubdivisionsPerBeat;
 			while(IsPlaying)
 			{
 				var soundsToPlay = new List<string>();
