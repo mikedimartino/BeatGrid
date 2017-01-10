@@ -562,9 +562,6 @@ namespace BeatGridAndroid
 			// aapt resource value: 0x7f080003
 			public const int BeatSettingsTimeSignatureValueTextView = 2131230723;
 			
-			// aapt resource value: 0x7f080014
-			public const int ExpListViewHeader = 2131230740;
-			
 			// aapt resource value: 0x7f08000f
 			public const int NextButton = 2131230735;
 			
@@ -577,23 +574,11 @@ namespace BeatGridAndroid
 			// aapt resource value: 0x7f08000e
 			public const int PlayPauseButton = 2131230734;
 			
-			// aapt resource value: 0x7f080017
-			public const int PlaySoundButton = 2131230743;
-			
 			// aapt resource value: 0x7f08000d
 			public const int PreviousButton = 2131230733;
 			
 			// aapt resource value: 0x7f08000a
 			public const int SaveButton = 2131230730;
-			
-			// aapt resource value: 0x7f080016
-			public const int SelectSoundButton = 2131230742;
-			
-			// aapt resource value: 0x7f080013
-			public const int SelectSoundExpListView = 2131230739;
-			
-			// aapt resource value: 0x7f080015
-			public const int SelectSoundItemTextView = 2131230741;
 			
 			// aapt resource value: 0x7f08000c
 			public const int SettingsButton = 2131230732;
@@ -601,8 +586,8 @@ namespace BeatGridAndroid
 			// aapt resource value: 0x7f08000b
 			public const int XButton = 2131230731;
 			
-			// aapt resource value: 0x7f080018
-			public const int XOptionList = 2131230744;
+			// aapt resource value: 0x7f080013
+			public const int XOptionList = 2131230739;
 			
 			static Id()
 			{
@@ -630,19 +615,10 @@ namespace BeatGridAndroid
 			public const int OpenBeatTextViewItem = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int SelectSoundDialog = 2130903044;
+			public const int XDialog = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int SelectSoundExpandableListViewHeader = 2130903045;
-			
-			// aapt resource value: 0x7f030006
-			public const int SelectSoundExpandableListViewItem = 2130903046;
-			
-			// aapt resource value: 0x7f030007
-			public const int XDialog = 2130903047;
-			
-			// aapt resource value: 0x7f030008
-			public const int XOptionTextViewItem = 2130903048;
+			public const int XOptionTextViewItem = 2130903045;
 			
 			static Layout()
 			{

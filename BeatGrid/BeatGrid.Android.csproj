@@ -67,9 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSharp Files\BeatSettingsDialogFragment.cs" />
-    <Compile Include="CSharp Files\SelectSoundExpandableListAdapter.cs" />
     <Compile Include="CSharp Files\OpenBeatFragment.cs" />
-    <Compile Include="CSharp Files\SelectSoundDialogFragment.cs" />
     <Compile Include="CSharp Files\CustomViews.cs" />
     <Compile Include="CSharp Files\SoundLibraryDialogFragment.cs" />
     <Compile Include="CSharp Files\SoundManager.cs" />
@@ -137,15 +135,6 @@
     <AndroidResource Include="Resources\raw\snare02.ogg" />
     <AndroidResource Include="Resources\raw\snare03.ogg" />
     <AndroidResource Include="Resources\raw\snare04.ogg" />
-    <AndroidResource Include="Resources\layout\SelectSoundExpandableListViewHeader.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\SelectSoundExpandableListViewItem.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\SelectSoundDialog.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
     <AndroidResource Include="Resources\drawable\sound_category_border.xml">
       <SubType>Designer</SubType>
     </AndroidResource>

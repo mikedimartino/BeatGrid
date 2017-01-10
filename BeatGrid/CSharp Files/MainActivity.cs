@@ -211,10 +211,8 @@ namespace BeatGridAndroid
 
 		private void OnSoundLongClicked(Sound sound)
 		{
-			//TODO: Implement
-			var transaction = FragmentManager.BeginTransaction();
-			var selectSoundDialog = new SelectSoundDialogFragment(SoundManager);
-			selectSoundDialog.Show(transaction, "select_sound_dialog_fragment");
+			var soundLibraryDialog = new SoundLibraryDialogFragment(_mvm, SoundManager);
+			soundLibraryDialog.Show(FragmentManager.BeginTransaction(), "sound_library_dialog_fragment");
 		}
 
 		private void OnPlaySounds(object source, PlaySoundsListEventArgs e)
@@ -280,12 +278,6 @@ namespace BeatGridAndroid
 		public void OnSaveBeatClicked(object sender, EventArgs e)
 		{
 			//_mvm.OnSaveClick();
-			//TestSoundPool();
-
-			//temp:
-			var transaction = FragmentManager.BeginTransaction();
-			var soundLibraryDialog = new SoundLibraryDialogFragment(_mvm, SoundManager);
-			soundLibraryDialog.Show(transaction, "sound_library_dialog_fragment");
 		}
 		#endregion
 
