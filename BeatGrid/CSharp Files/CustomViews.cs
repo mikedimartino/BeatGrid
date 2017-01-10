@@ -16,16 +16,40 @@ namespace BeatGridAndroid.CustomViews
 {
 	public class ExpandableSoundCategoryView : LinearLayout
 	{
+		CategoryHeaderView _categoryHeader;
+		List<SelectSoundView> _soundsViews;
+
 		public ExpandableSoundCategoryView(Context context, string name, List<Sound> sounds) : base(context)
 		{
-			var test = context as MainActivity;
-
 			Name = name;
 			IsExpanded = false;
 
 			LayoutParameters = new LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
+			Orientation = Orientation.Vertical;
 
-			AddView(new CategoryHeaderView(context, name));
+			_categoryHeader = new CategoryHeaderView(context, name);
+			_categoryHeader.Click += _categoryHeader_Click;
+			AddView(_categoryHeader);
+
+			_soundsViews = new List<SelectSoundView>();
+			foreach(var sound in sounds)
+			{
+				var soundView = new SelectSoundView(context, sound);
+				_soundsViews.Add(soundView);
+				AddView(soundView);
+			}
+
+		}
+
+		private void _categoryHeader_Click(object sender, EventArgs e)
+		{
+			IsExpanded = !IsExpanded;
+			_categoryHeader.IsExpanded = IsExpanded;
+			var childVisibility = IsExpanded ? ViewStates.Visible : ViewStates.Gone; // invisible until category is expanded
+			foreach(var soundView in _soundsViews)
+			{
+				soundView.Visibility = childVisibility;
+			}
 		}
 
 		public string Name { get; set; }
@@ -66,13 +90,6 @@ namespace BeatGridAndroid.CustomViews
 
 			AddView(_arrowTV);
 			AddView(_nameTV);
-
-			Click += CategoryHeaderView_Click;
-		}
-
-		private void CategoryHeaderView_Click(object sender, EventArgs e)
-		{
-			IsExpanded = !IsExpanded;
 		}
 
 		public string Name
@@ -97,31 +114,57 @@ namespace BeatGridAndroid.CustomViews
 	}
 
 
-
 	public class SelectSoundView : RelativeLayout
 	{
+		Sound _sound;
 		TextView _nameTV;
 		Button _listenBtn, _selectBtn;
 
 		public SelectSoundView(Context context, Sound sound) : base(context) 
 		{
-			InitLayout(sound);
-		}
+			_sound = sound;
 
+			LayoutParameters = new LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
+			Visibility = ViewStates.Gone; // invisible until category is expanded
+			SetBackgroundResource(Resource.Drawable.sound_border);
 
-		private void InitLayout(Sound sound)
-		{
 			_nameTV = new TextView(Context);
 			_nameTV.Text = sound.LongName;
-			_nameTV.LayoutParameters = new LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
-			_nameTV.SetPadding(10, 25, 10, 25);
-			_nameTV.SetBackgroundResource(Resource.Drawable.sound_border);
-
-			_listenBtn = new Button(Context);
-			_listenBtn.Text = "Listen";
+			_nameTV.TextSize = 30;
+			_nameTV.SetTextColor(Color.ParseColor(Resources.GetString(Resource.Color.black)));
+			var nameParams = new LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
+			nameParams.AddRule(LayoutRules.AlignParentLeft);
+			nameParams.AddRule(LayoutRules.CenterVertical);
+			_nameTV.LayoutParameters = nameParams;
+			_nameTV.SetPadding(20, 25, 0, 25);
 
 			_selectBtn = new Button(Context);
 			_selectBtn.Text = "Select";
+			_selectBtn.TextSize = 25;
+			_selectBtn.Id = GenerateViewId();
+			var selectParams = new LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
+			selectParams.AddRule(LayoutRules.AlignParentRight);
+			selectParams.AddRule(LayoutRules.CenterVertical);
+			_selectBtn.LayoutParameters = selectParams;
+
+			_listenBtn = new Button(Context);
+			_listenBtn.Text = "Listen";
+			_listenBtn.TextSize = 25;
+			var listenParams = new LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
+			listenParams.AddRule(LayoutRules.LeftOf, _selectBtn.Id);
+			listenParams.AddRule(LayoutRules.CenterVertical);
+			_listenBtn.LayoutParameters = listenParams;
+			_listenBtn.Click += _listenBtn_Click;
+
+
+			AddView(_nameTV);
+			AddView(_selectBtn);
+			AddView(_listenBtn);
+		}
+
+		private void _listenBtn_Click(object sender, EventArgs e)
+		{
+			(Context as MainActivity).SoundManager.PlaySound(_sound);
 		}
 	}
 }

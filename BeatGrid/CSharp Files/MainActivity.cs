@@ -18,7 +18,6 @@ namespace BeatGridAndroid
 	public class MainActivity : Activity
 	{
 		private MainViewModel _mvm;
-		private SoundManager _soundManager;
 
 		#region UI Related
 		private TableLayout _beatGridTable;
@@ -42,6 +41,8 @@ namespace BeatGridAndroid
 
 		#region Global properties
 		public Typeface FontAwesome { get; set; }
+		public List<Sound> AllSounds { get;set; }
+		public SoundManager SoundManager { get; set; }
 		#endregion
 
 		protected override void OnCreate(Bundle bundle)
@@ -65,7 +66,9 @@ namespace BeatGridAndroid
 			_cellButtons = new Dictionary<string, Button>();
 			_cellOffColorResIds = new Dictionary<string, int>();
 
-			_soundManager = new SoundManager(this);
+			SoundManager = new SoundManager(this);
+
+			AllSounds = SoundManager.AllSounds;
 
 			//InitSoundPool();
 			DrawMeasure(Measure.GetEmptyMeasure());
@@ -203,20 +206,20 @@ namespace BeatGridAndroid
 		private void OnSoundClicked(Sound sound)
 		{
 			//TODO: Implement
-			_soundManager.PlaySound(sound);
+			SoundManager.PlaySound(sound);
 		}
 
 		private void OnSoundLongClicked(Sound sound)
 		{
 			//TODO: Implement
 			var transaction = FragmentManager.BeginTransaction();
-			var selectSoundDialog = new SelectSoundDialogFragment(_soundManager);
+			var selectSoundDialog = new SelectSoundDialogFragment(SoundManager);
 			selectSoundDialog.Show(transaction, "select_sound_dialog_fragment");
 		}
 
 		private void OnPlaySounds(object source, PlaySoundsListEventArgs e)
 		{
-			_soundManager.PlaySounds(e.SoundFileNames);
+			SoundManager.PlaySounds(e.SoundFileNames);
 		}
 
 		#region XClicked
@@ -281,7 +284,7 @@ namespace BeatGridAndroid
 
 			//temp:
 			var transaction = FragmentManager.BeginTransaction();
-			var soundLibraryDialog = new SoundLibraryDialogFragment(_mvm, _soundManager);
+			var soundLibraryDialog = new SoundLibraryDialogFragment(_mvm, SoundManager);
 			soundLibraryDialog.Show(transaction, "sound_library_dialog_fragment");
 		}
 		#endregion

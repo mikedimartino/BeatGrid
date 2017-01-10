@@ -21,11 +21,13 @@ namespace BeatGridAndroid
 	{
 		MainViewModel _mvm;
 		SoundManager _soundManager;
+		MainActivity _mainActivity;
 
 		public SoundLibraryDialogFragment(MainViewModel mvm, SoundManager soundManager)
 		{
 			_mvm = mvm;
 			_soundManager = soundManager;
+			_mainActivity = Activity as MainActivity;
 		}
 
 		public override Dialog OnCreateDialog(Bundle savedInstanceState)
@@ -36,56 +38,23 @@ namespace BeatGridAndroid
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			// Use this to return your custom view for this Fragment
-			// return inflater.Inflate(Resource.Layout.YourFragment, container, false);
+
+			Dialog.SetTitle("Select Sound:");
 
 			LinearLayout ll = new LinearLayout(Activity);
 			var llParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
 			ll.LayoutParameters = llParams;
 			ll.Orientation = Orientation.Vertical;
 
-			for (int i=0; i<5; i++)
+			var soundsGroupedByCategory = (Activity as MainActivity).AllSounds.GroupBy(s => s.Category);
+			foreach (var group in soundsGroupedByCategory)
 			{
-				ll.AddView(new ExpandableSoundCategoryView(Activity, "Sound Category " + i, new List<Sound>()));
-
-				//ll.AddView(borderView);
-
-				//RelativeLayout rl = new RelativeLayout(Activity);
-				//var rlParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
-				//rl.LayoutParameters = rlParams;
-
-				//TextView soundNameTV = new TextView(Activity);
-				//soundNameTV.Text = "THIS IS A TEST!";
-				//soundNameTV.TextSize = 20;
-				//var soundNameParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
-				//soundNameParams.AddRule(LayoutRules.AlignParentLeft);
-				//soundNameTV.LayoutParameters = soundNameParams;
-
-				//Button selectButton = new Button(Activity);
-				//selectButton.Text = "Select";
-				//selectButton.Id = View.GenerateViewId();
-				//var selectButtonParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
-				//selectButtonParams.AddRule(LayoutRules.AlignParentRight);
-
-				//selectButton.LayoutParameters = selectButtonParams;
-
-				//Button playButton = new Button(Activity);
-				//playButton.Text = "Listen";
-				//var playButtonParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
-				//playButtonParams.AddRule(LayoutRules.LeftOf, selectButton.Id);
-				//playButton.LayoutParameters = playButtonParams;
-
-				//rl.AddView(soundNameTV);
-				//rl.AddView(playButton);
-				//rl.AddView(selectButton);
-
-				//ll.AddView(rl);
+				ll.AddView(new ExpandableSoundCategoryView(Activity, group.Key, group.ToList()));
 			}
 
-			
-
-			return ll;
-
-			//return base.OnCreateView(inflater, container, savedInstanceState);
+			ScrollView scrollView = new ScrollView(Activity);
+			scrollView.AddView(ll);
+			return scrollView;
 		}
 
 		private View CreateSelectSoundView()
