@@ -61,7 +61,17 @@ namespace BeatGrid
 
 	public class SoundHelper
 	{
-		public static List<Sound> GetAllSounds()
+		private static List<Sound> _AllSounds = null;
+		public static List<Sound> AllSounds
+		{
+			get
+			{
+				if (_AllSounds == null) _AllSounds = GetAllSounds();
+				return _AllSounds;
+			}
+		}
+
+		private static List<Sound> GetAllSounds()
 		{
 			List<Sound> allSounds = new List<Sound>();
 
@@ -109,7 +119,17 @@ namespace BeatGrid
 			return allSounds;
 		}
 
-		public static List<Sound> GetDefaultSounds()
+		private static List<Sound> _DefaultSounds = null;
+		public static List<Sound> DefaultSounds
+		{
+			get
+			{
+				if (_DefaultSounds == null) _DefaultSounds = GetDefaultSounds();
+				return _DefaultSounds;
+			}
+		}
+
+		private static List<Sound> GetDefaultSounds()
 		{
 			List<Sound> sounds = new List<Sound>();
 

@@ -17,5 +17,7 @@ namespace BeatGrid
 
 		public int NotesPerMeasure { get; set; }
 		public NoteType NoteType { get; set; }
+
+		public static TimeSignature Default = new TimeSignature(4, NoteType.Quarter);
 	}
 }

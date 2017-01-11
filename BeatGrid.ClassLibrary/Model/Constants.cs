@@ -13,5 +13,7 @@ namespace BeatGrid
 		public const int MIN_TEMPO = 40;
 		public const int MAX_TEMPO = 240;
 		public const int DEFAULT_TEMPO = 100;
+
+		public const NoteType DefaultDivisionLevel = NoteType.Sixteenth;
 	}
 }

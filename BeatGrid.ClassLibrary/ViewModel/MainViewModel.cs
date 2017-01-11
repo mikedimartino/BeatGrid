@@ -12,7 +12,7 @@ namespace BeatGrid.ViewModel
 		public MainViewModel(SQLiteProvider provider)
 		{
 			_provider = provider;
-			CurrentBeat = Beat.GetEmptyBeat();
+			CurrentBeat = new Beat();
 			CurrentMeasure = CurrentBeat.Measures.FirstOrDefault();
 			IsPlaying = false;
 		}
@@ -24,17 +24,6 @@ namespace BeatGrid.ViewModel
 		#endregion
 
 		#region UI Event Handling
-
-		#region CellChanged
-		public delegate void CellChangedEventHandler(object source, CellEventArgs args);
-
-		public event CellChangedEventHandler CellChanged;
-
-		public void OnCellChanged(Cell cell)
-		{
-			CellChanged?.Invoke(this, new CellEventArgs(cell));
-		}
-		#endregion
 
 		#region SoundChanged
 		public delegate void SoundChangedEventHandler(object source, SoundEventArgs args);
@@ -128,7 +117,6 @@ namespace BeatGrid.ViewModel
 		{
 			cell.On = !cell.On;
 			CurrentMeasure.Cells[cell.Row, cell.Column].On = cell.On;
-			OnCellChanged(cell);
 		}
 
 		public void ClearCurrentMeasure()
@@ -157,7 +145,7 @@ namespace BeatGrid.ViewModel
 
 		public void OpenBeat(int beatId)
 		{
-			OnBeatChanged(Beat.GetTestBeat());
+			OnBeatChanged(new Beat());
 			//TODO: Load beat from db 
 		}
 		#endregion

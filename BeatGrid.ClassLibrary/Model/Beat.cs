@@ -8,7 +8,25 @@ namespace BeatGrid
 {
 	public class Beat
 	{
-		public Beat() { }
+		public Beat() : this(SoundHelper.DefaultSounds) { }
+
+		public Beat(List<Sound> sounds)
+		{
+			Id = Constants.NEW_BEAT_ID;
+			Name = "_UNNAMED";
+			CurrentMeasureIndex = 0;
+			Sounds = sounds;
+			TimeSignature = TimeSignature.Default;
+			DivisionLevel = Constants.DefaultDivisionLevel;
+			SubdivisionsPerBeat = DivisionLevel.GetDenominator() / TimeSignature.NoteType.GetDenominator();
+			ColumnsPerMeasure = TimeSignature.NotesPerMeasure *
+					(DivisionLevel.GetDenominator() / TimeSignature.NoteType.GetDenominator());
+			Tempo = Constants.DEFAULT_TEMPO;
+
+			Measures = new List<Measure>();
+			Measures.Add(new Measure(this));
+		}
+
 		public Beat(List<Sound> sounds, List<Measure> measures)
 		{
 			Id = Constants.NEW_BEAT_ID;
@@ -16,6 +34,12 @@ namespace BeatGrid
 			Measures = measures;
 			CurrentMeasureIndex = 0;
 			Sounds = sounds;
+
+			TimeSignature = TimeSignature.Default;
+			DivisionLevel = Constants.DefaultDivisionLevel;
+			SubdivisionsPerBeat = DivisionLevel.GetDenominator() / TimeSignature.NoteType.GetDenominator();
+			ColumnsPerMeasure = TimeSignature.NotesPerMeasure *
+					(DivisionLevel.GetDenominator() / TimeSignature.NoteType.GetDenominator());
 			Tempo = Constants.DEFAULT_TEMPO;
 		}
 
@@ -28,6 +52,7 @@ namespace BeatGrid
 		public List<Measure> Measures { get; set; }
 		public int SubdivisionsPerBeat { get; set; } // Beat as in BPM
 		public int PlaybackIntervalMs { get; set; }
+		public int ColumnsPerMeasure { get; set; }
 
 		private int _Tempo = Constants.DEFAULT_TEMPO;
 		public int Tempo
@@ -40,10 +65,16 @@ namespace BeatGrid
 			}
 		}
 
+		// Alternate color every beat for readability.
+		public bool CellShouldUseAlternateOffColor(Cell cell)
+		{
+			return cell.Column % (2 * SubdivisionsPerBeat) >= SubdivisionsPerBeat;
+		}
+
 		private void UpdatePlaybackIntervalMs()
 		{
 			double intervalBetweenBeatsMs = (1.0 / Tempo) * 60 * 1000;
-			PlaybackIntervalMs = (int) intervalBetweenBeatsMs / CurrentMeasure.SubdivisionsPerBeat;
+			PlaybackIntervalMs = (int) intervalBetweenBeatsMs / SubdivisionsPerBeat;
 		} 
 
 		public List<Sound> Sounds { get; set; }
@@ -57,58 +88,6 @@ namespace BeatGrid
 				Json = JsonConvert.SerializeObject(this)
 			};
 		}
-
-		#region Test Methods
-		/// <summary>
-		/// Returns a beat with 'measureCount' random measures.
-		/// </summary>
-		/// <param name="measureCount"></param>
-		/// <returns></returns>
-		public static Beat GetTestBeat(int measureCount = 1)
-		{
-			var measures = new List<Measure>();
-			for(int i = 0; i < measureCount; i++)
-			{
-				measures.Add(Measure.GetRandomTestMeasure());
-			}
-			var sounds = SoundHelper.GetDefaultSounds();
-			Beat beat = new Beat(sounds, measures);
-			return beat;
-		}
-
-		public static Beat GetEmptyBeat(int measureCount = 1)
-		{
-			var measures = new List<Measure>();
-			for (int i = 0; i < measureCount; i++)
-			{
-				measures.Add(Measure.GetEmptyMeasure());
-			}
-			var sounds = SoundHelper.GetDefaultSounds();
-			Beat beat = new Beat(sounds, measures);
-			return beat;
-		}
-
-		public static Measure GetEmptyMeasure()
-		{
-			return new Measure(Constants.MAX_ACTIVE_SOUNDS, 16);
-		}
-
-		public static Measure GetRandomTestMeasure()
-		{
-			var measure = new Measure(Constants.MAX_ACTIVE_SOUNDS, 16);
-			var rand = new Random();
-
-			for (int i = 0; i < measure.Cells.GetLength(0); i++)
-			{
-				for (int j = 0; j < measure.Cells.GetLength(1); j++)
-				{
-					measure[i, j].On = rand.Next(0, 6) == 0;
-				}
-			}
-
-			return measure;
-		}
-		#endregion
 
 	}
 }

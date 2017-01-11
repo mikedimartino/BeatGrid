@@ -55,7 +55,6 @@ namespace BeatGridAndroid
 
 			_mvm = new MainViewModel(GetSQLiteProvider());
 
-			_mvm.CellChanged += OnCellChanged;
 			_mvm.MeasureChanged += OnMeasureChanged;
 			_mvm.BeatChanged += OnBeatChanged;
 			_mvm.PlaySoundsList += OnPlaySounds;
@@ -71,8 +70,8 @@ namespace BeatGridAndroid
 			AllSounds = SoundManager.AllSounds;
 
 			//InitSoundPool();
-			DrawMeasure(Measure.GetEmptyMeasure());
-
+			//DrawMeasure(Measure.GetEmptyMeasure());
+			DrawMeasure(_mvm.CurrentBeat.CurrentMeasure);
 		}
 
 		// Initialize buttons and other layout items
@@ -169,7 +168,7 @@ namespace BeatGridAndroid
 					
 					_cellButtons.Add(cell.GetCoordinate(), button);
 
-					int offColorResId = _mvm.CurrentMeasure.CellShouldUseAlternateOffColor(cell) ?
+					int offColorResId = _mvm.CurrentBeat.CellShouldUseAlternateOffColor(cell) ?
 						Resource.Drawable.button_off2 : Resource.Drawable.button_off1;
 					_cellOffColorResIds.Add(cell.GetCoordinate(), offColorResId);
 
@@ -182,11 +181,6 @@ namespace BeatGridAndroid
 		}
 
 		#region Event Handlers
-		private void OnCellChanged(object source, CellEventArgs e)
-		{
-			DrawCell(e.Cell);
-		}
-
 		private void OnMeasureChanged(object source, MeasureEventArgs e)
 		{
 			foreach (var cell in e.Measure.Cells) DrawCell(cell);
@@ -201,6 +195,7 @@ namespace BeatGridAndroid
 		private void OnCellClicked(Cell cell)
 		{
 			_mvm.ToggleCell(cell);
+			DrawCell(cell);
 		}
 
 		private void OnSoundClicked(Sound sound)
@@ -340,7 +335,7 @@ namespace BeatGridAndroid
 				string databaseFileName = System.IO.Path.Combine(applicationFolderPath, "BeatGrid.db");
 
 				SQLiteProvider provider = new SQLiteProvider(databaseFileName);
-				provider.SaveBeat(Beat.GetTestBeat());
+				provider.SaveBeat(new Beat());
 				var beats = provider.GetAllBeats();
 				var firstBeat = provider.GetBeat(beats.First().Id);
 			}

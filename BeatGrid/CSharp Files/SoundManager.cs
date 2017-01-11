@@ -64,7 +64,7 @@ namespace BeatGridAndroid
 		public SoundManager(MainActivity mainActivity)
 		{
 			_mainActivity = mainActivity;
-			AllSounds = SoundHelper.GetAllSounds();
+			AllSounds = SoundHelper.AllSounds;
 			_soundPool = new SoundPool(Constants.MAX_ACTIVE_SOUNDS, Stream.Music, 0);
 
 			_soundFileNameToSoundPoolId = new Dictionary<string, int>();
