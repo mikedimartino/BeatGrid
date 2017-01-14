@@ -69,8 +69,6 @@ namespace BeatGridAndroid
 
 			AllSounds = SoundManager.AllSounds;
 
-			//InitSoundPool();
-			//DrawMeasure(Measure.GetEmptyMeasure());
 			DrawMeasure(_mvm.CurrentBeat.CurrentMeasure);
 		}
 
@@ -200,7 +198,6 @@ namespace BeatGridAndroid
 
 		private void OnSoundClicked(Sound sound)
 		{
-			//TODO: Implement
 			SoundManager.PlaySound(sound);
 		}
 
@@ -218,10 +215,9 @@ namespace BeatGridAndroid
 		#region XClicked
 		public void OnXClicked(object sender, EventArgs e)
 		{
-			var transaction = FragmentManager.BeginTransaction();
 			var xDialog = new XDialogFragment();
 			xDialog.XOptionSelected += OnXSelectionMade;
-			xDialog.Show(transaction, "x_dialog_fragment");
+			xDialog.Show(FragmentManager.BeginTransaction(), "x_dialog_fragment");
 		}
 
 		public void OnXSelectionMade(object source, XOptionEventArgs e)
@@ -340,26 +336,6 @@ namespace BeatGridAndroid
 				var firstBeat = provider.GetBeat(beats.First().Id);
 			}
 			catch(Exception) { }
-		}
-
-		SoundPool soundPool;
-		int soundId1;
-		int soundId2;
-		int soundId3;
-		int soundId4;
-
-		public void TestSoundPool()
-		{
-			soundPool.Play(soundId1, 1, 1, 0, 0, 1);
-		}
-
-		public void InitSoundPool()
-		{
-			soundPool = new SoundPool(8, Stream.Music, 0);
-			soundId1 = soundPool.Load(this, Resource.Raw.clhat01, 1);
-			soundId2 = soundPool.Load(this, Resource.Raw.ride1, 1);
-			soundId3 = soundPool.Load(this, Resource.Raw.snare01, 1);
-			soundId4 = soundPool.Load(this, Resource.Raw.kick01, 1);
 		}
 
 
